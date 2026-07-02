@@ -16,11 +16,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 
-	"emplacc-api/internal/controller"
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/repository/postgres"
 	"emplacc-api/internal/service"
+	httpapi "emplacc-api/internal/transport/http"
 )
 
 // createTestProject создаёт тестовый проект
@@ -63,9 +63,9 @@ func TestBoard_FullCRUD(t *testing.T) {
 	testDB := setupTestDB(t)
 
 	// Создаем зависимости для новой архитектуры
-	boardRepo := repository.NewBoardRepository(testDB)
+	boardRepo := postgres.NewBoardRepository(testDB)
 	boardService := service.NewBoardService(boardRepo)
-	boardController := controller.NewBoardController(boardService)
+	boardController := httpapi.NewBoardController(boardService)
 
 	// Создаём Echo instance
 	e := echo.New()

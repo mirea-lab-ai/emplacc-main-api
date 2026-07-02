@@ -3,7 +3,7 @@ package service
 import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"errors"
 	"time"
 
@@ -15,22 +15,23 @@ type ProblemService interface {
 	GetAllProblems(page, pageSize int) ([]models.Problem, int64, error)
 	GetProblemsByUserId(creatorUUID uuid.UUID, page, pageSize int) ([]models.Problem, int64, error)
 	GetProblemByID(problemId uuid.UUID) (*models.Problem, error)
+	SearchProblems(query string, page, pageSize int) ([]models.Problem, int64, error)
 	CreateProblem(req request.ProblemCreateRequest) (uuid.UUID, error)
 	UpdateProblem(problemId uuid.UUID, req request.ProblemUpdateRequest) error
 	DeleteProblem(problemId uuid.UUID) error
-	CreateForumMessage(problemId uuid.UUID, description []string) (error)
+	CreateForumMessage(problemId uuid.UUID, description []string) error
 }
 
 type problemService struct {
-	repo repository.ProblemRepository
-	forumRepo repository.ForumMessageRepository
+	repo         ports.ProblemRepository
+	forumRepo    ports.ForumMessageRepository
 	systemUserId uuid.UUID
 }
 
-func NewProblemService(repo repository.ProblemRepository, forumRepo repository.ForumMessageRepository, systemUserId uuid.UUID) ProblemService {
+func NewProblemService(repo ports.ProblemRepository, forumRepo ports.ForumMessageRepository, systemUserId uuid.UUID) ProblemService {
 	return &problemService{
-		repo: repo,
-		forumRepo: forumRepo,
+		repo:         repo,
+		forumRepo:    forumRepo,
 		systemUserId: systemUserId,
 	}
 }
@@ -49,7 +50,12 @@ func (s *problemService) GetProblemByID(problemId uuid.UUID) (*models.Problem, e
 	return s.repo.GetProblemByID(problemId)
 }
 
-func (s *problemService) CreateForumMessage(problemId uuid.UUID, description []string) (error) {
+func (s *problemService) SearchProblems(query string, page, pageSize int) ([]models.Problem, int64, error) {
+	offset := (page - 1) * pageSize
+	return s.repo.SearchProblems(query, pageSize, offset)
+}
+
+func (s *problemService) CreateForumMessage(problemId uuid.UUID, description []string) error {
 	now := time.Now()
 	del := false
 
@@ -130,6 +136,9 @@ func (s *problemService) CreateProblem(req request.ProblemCreateRequest) (uuid.U
 
 func (s *problemService) UpdateProblem(problemId uuid.UUID, req request.ProblemUpdateRequest) error {
 	updateData := make(map[string]interface{})
+	if req.Name != nil && *req.Name != "" {
+		updateData["name"] = *req.Name
+	}
 	if req.Description != nil {
 		updateData["description"] = pq.StringArray(*req.Description)
 	}

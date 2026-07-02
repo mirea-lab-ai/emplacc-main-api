@@ -13,63 +13,63 @@ type ReportResponse struct {
 	ID            string            `json:"id"`
 	UserID        string            `json:"user_id"`
 	ReportDate    time.Time         `json:"report_date"`
-	CompletedWork []CompletedWork      `json:"completed_work"`
-	PlanTomorrow  []TomorrowPlans        `json:"plan_tomorrow"`
-	HelpRequest   []HelpRequestItem   `json:"help_requests,omitempty"`
+	CompletedWork []CompletedWork   `json:"completed_work"`
+	PlanTomorrow  []TomorrowPlans   `json:"plan_tomorrow"`
+	HelpRequest   []HelpRequestItem `json:"help_requests,omitempty"`
 	CreatedAt     time.Time         `json:"created_at"`
 	UpdatedAt     time.Time         `json:"updated_at"`
 	UserInfo      UserShort         `json:"user_info"`
-	Checked	   	  int8           `json:"checked"`
+	Checked       int8              `json:"checked"`
 	Problems      []ProblemResponse `json:"problem"`
 }
 
 type ReportFullResponse struct {
-	ID            string            `json:"id"`
-	UserID        string            `json:"user_id"`
-	ReportDate    time.Time         `json:"report_date"`
-	CompletedWork []CompletedWorkWithTask      `json:"completed_work"`
-	PlanTomorrow  []TomorrowPlansWithTask        `json:"plan_tomorrow"`
-	HelpRequest   []HelpRequestItem   `json:"help_requests,omitempty"`
-	CreatedAt     time.Time         `json:"created_at"`
-	UpdatedAt     time.Time         `json:"updated_at"`
-	UserInfo      UserShort         `json:"user_info"`
-	Checked	   	  int8           `json:"checked"`
-	Problems      []ProblemResponse `json:"problem"`
+	ID            string                  `json:"id"`
+	UserID        string                  `json:"user_id"`
+	ReportDate    time.Time               `json:"report_date"`
+	CompletedWork []CompletedWorkWithTask `json:"completed_work"`
+	PlanTomorrow  []TomorrowPlansWithTask `json:"plan_tomorrow"`
+	HelpRequest   []HelpRequestItem       `json:"help_requests,omitempty"`
+	CreatedAt     time.Time               `json:"created_at"`
+	UpdatedAt     time.Time               `json:"updated_at"`
+	UserInfo      UserShort               `json:"user_info"`
+	Checked       int8                    `json:"checked"`
+	Problems      []ProblemResponse       `json:"problem"`
 }
 
 type TomorrowPlansWithTask struct {
-	ID          string `json:"id"`
-	Description string `json:"description"`
-	Task        TaskForReport         `json:"task"`
+	ID          string        `json:"id"`
+	Description string        `json:"description"`
+	Task        TaskForReport `json:"task"`
 }
 
-type CompletedWorkWithTask struct{
-	ID          string `json:"id"`
-	Description string `json:"description"`
-	Task        TaskForReport         `json:"task"`
+type CompletedWorkWithTask struct {
+	ID          string        `json:"id"`
+	Description string        `json:"description"`
+	Task        TaskForReport `json:"task"`
 }
 
 type InTaskBoard struct {
-	BoardName string   `json:"name"`
-	BoardId   string   `json:"id"`
+	BoardName string `json:"name"`
+	BoardId   string `json:"id"`
 }
 
 type InTaskProject struct {
 	ProjectName string `json:"name"`
-	ProjectId  string  `json:"id"`
+	ProjectId   string `json:"id"`
 }
 
 type TaskForReport struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Description string `json:"description"`
-	Board InTaskBoard  `json:"board"`
-	Project InTaskProject `json:"project"`
+	ID          string        `json:"id"`
+	Name        string        `json:"name"`
+	Description string        `json:"description"`
+	Board       InTaskBoard   `json:"board"`
+	Project     InTaskProject `json:"project"`
 }
 
 type ProblemResponse struct {
 	ID          string    `json:"id"`
-	Name        string    `json:"name"`		
+	Name        string    `json:"name"`
 	Description []string  `json:"description"`
 	CreatorId   string    `json:"creator_id"`
 	CreatedAt   time.Time `json:"created_at"`
@@ -79,19 +79,19 @@ type ProblemResponse struct {
 type TomorrowPlans struct {
 	ID          string `json:"id"`
 	Description string `json:"description"`
-	TaskId  string           `json:"task_id"`
+	TaskId      string `json:"task_id"`
 }
 
-type CompletedWork struct{
+type CompletedWork struct {
 	ID          string `json:"id"`
 	Description string `json:"description"`
-	TaskId        string `json:"task_id"`
+	TaskId      string `json:"task_id"`
 }
 
 type HelpRequestItem struct {
 	ID          string `json:"id"`
 	HelperID    string `json:"helper_id"`
-	Status      string     `json:"status"`
+	Status      string `json:"status"`
 	Description string `json:"description"`
 }
 
@@ -112,46 +112,46 @@ type ReportListByProjectId struct {
 	Reports   []ReportResponse `json:"reports"`
 }
 
-type HelpRequestWithAssignerID struct{
-	HelpRequest HelpRequestItem `json:"help_request"`
-	UserFirstName      string    `json:"user_first_name"`
-	UserLastName       string    `json:"user_last_name"`
+type HelpRequestWithAssignerID struct {
+	HelpRequest   HelpRequestItem `json:"help_request"`
+	UserFirstName string          `json:"user_first_name"`
+	UserLastName  string          `json:"user_last_name"`
 }
 
-type HelpRequestsForUser struct{
+type HelpRequestsForUser struct {
 	HelpRequests []HelpRequestWithAssignerID `json:"help_requests"`
 }
 
 type XLSXReportEntry struct {
-    UserName string
-    Date     time.Time
-    Works    []string
+	UserName string
+	Date     time.Time
+	Works    []string
 }
 
 type XLSXReportData struct {
-    Users []string               // порядок пользователей
-    Dates []time.Time            // все даты в диапазоне
-    Grid  map[string]map[time.Time][]string // user → date → работы
+	Users []string                          // порядок пользователей
+	Dates []time.Time                       // все даты в диапазоне
+	Grid  map[string]map[time.Time][]string // user → date → работы
 }
 
 type TomorrowPlansXLSXData struct {
-    Users []UserTomorrowPlans `json:"users"`
+	Users []UserTomorrowPlans `json:"users"`
 }
 
 // Планы пользователя
 type UserTomorrowPlans struct {
-    UserID    string         `json:"user_id"`
-    UserName  string         `json:"user_name"`
-    UserEmail string         `json:"user_email"`
-    ReportDate time.Time     `json:"report_date"`
-    Plans     []TomorrowPlan `json:"plans"`
+	UserID     string         `json:"user_id"`
+	UserName   string         `json:"user_name"`
+	UserEmail  string         `json:"user_email"`
+	ReportDate time.Time      `json:"report_date"`
+	Plans      []TomorrowPlan `json:"plans"`
 }
 
 // Детали плана
 type TomorrowPlan struct {
-    ID          string    `json:"id"`
-    Description string    `json:"description"`
-    TaskName    string    `json:"task_name"`
-    ProjectName string    `json:"project_name"`
-    CreatedAt   time.Time `json:"created_at"`
+	ID          string    `json:"id"`
+	Description string    `json:"description"`
+	TaskName    string    `json:"task_name"`
+	ProjectName string    `json:"project_name"`
+	CreatedAt   time.Time `json:"created_at"`
 }

@@ -16,11 +16,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 
-	"emplacc-api/internal/controller"
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/repository/postgres"
 	"emplacc-api/internal/service"
+	httpapi "emplacc-api/internal/transport/http"
 )
 
 // createTestStatus создаёт тестовый статус
@@ -30,7 +30,7 @@ func createTestStatus(t *testing.T, db *gorm.DB, boardID uuid.UUID, name string)
 	del := false
 
 	namePtr := &name
-	
+
 	zero := 0
 	key := statusID.String()[:8]
 	status := models.Status{
@@ -39,7 +39,7 @@ func createTestStatus(t *testing.T, db *gorm.DB, boardID uuid.UUID, name string)
 		Key:       &key,
 		Name:      namePtr,
 		Color:     strPtr("#6C757D"),
-		SortOrder:     &zero,
+		SortOrder: &zero,
 		IsDefault: &del,
 		IsActive:  boolPtr(true),
 		IsOpen:    boolPtr(true),
@@ -93,15 +93,15 @@ func createTestProblem(t *testing.T, db *gorm.DB, name string, creatorID uuid.UU
 
 // Вспомогательные функции для указателей
 func strPtr(s string) *string { return &s }
-func boolPtr(b bool) *bool   { return &b }
+func boolPtr(b bool) *bool    { return &b }
 
 func TestReport_FullCRUD(t *testing.T) {
 	testDB := setupTestDB(t)
 
 	// Создаем зависимости для новой архитектуры
-	reportRepo := repository.NewReportRepository(testDB)
+	reportRepo := postgres.NewReportRepository(testDB)
 	reportService := service.NewReportService(reportRepo)
-	reportController := controller.NewReportController(reportService)
+	reportController := httpapi.NewReportController(reportService, testFreshAvatarURL)
 
 	e := echo.New()
 
@@ -138,7 +138,7 @@ func TestReport_FullCRUD(t *testing.T) {
 			PlanTomorrow: []request.TomorrowPlanCreateRequest{
 				{
 					Description: "Plan for tomorrow",
-					TaskId: taskId,
+					TaskId:      taskId,
 				},
 			},
 			Problems: []string{problemID.String()},

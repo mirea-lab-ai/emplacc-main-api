@@ -14,26 +14,26 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"emplacc-api/internal/controller"
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/repository/postgres"
 	"emplacc-api/internal/service"
+	httpapi "emplacc-api/internal/transport/http"
 )
 
 func TestProblem_FullCRUD(t *testing.T) {
 	testDB := setupTestDB(t)
 
-	// Создаем зависимости для новой архитектуры
-	problemRepo := repository.NewProblemRepository(testDB)
-	forumMessageRepo := repository.NewForumMessageRepository(testDB)
-	problemService := service.NewProblemService(problemRepo, forumMessageRepo, uuid.New())
-	problemController := controller.NewProblemController(problemService)
+	// Create test entities before wiring services that need a system user.
+	userID := createTestUser(t, testDB, "user@example.com")
+
+	// Create dependencies for the current architecture.
+	problemRepo := postgres.NewProblemRepository(testDB)
+	forumMessageRepo := postgres.NewForumMessageRepository(testDB)
+	problemService := service.NewProblemService(problemRepo, forumMessageRepo, userID)
+	problemController := httpapi.NewProblemController(problemService)
 
 	e := echo.New()
-
-	// Создаём тестовые сущности
-	userID := createTestUser(t, testDB, "user@example.com")
 
 	var problemID uuid.UUID
 
@@ -126,6 +126,7 @@ func TestProblem_FullCRUD(t *testing.T) {
 		c := e.NewContext(req, rec)
 		c.SetParamNames("id")
 		c.SetParamValues(problemID.String())
+		c.Set("user_id", userID.String())
 
 		err := problemController.UpdateProblem(c)
 		assert.NoError(t, err)

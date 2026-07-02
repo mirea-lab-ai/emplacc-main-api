@@ -3,7 +3,7 @@ package service
 import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"errors"
 	"time"
 
@@ -26,10 +26,10 @@ type TeamService interface {
 }
 
 type teamService struct {
-	repo repository.TeamRepository
+	repo ports.TeamRepository
 }
 
-func NewTeamService(repo repository.TeamRepository) TeamService {
+func NewTeamService(repo ports.TeamRepository) TeamService {
 	return &teamService{
 		repo: repo,
 	}
@@ -92,10 +92,10 @@ func (s *teamService) CreateTeam(req request.TeamCreateRequest) (uuid.UUID, erro
 	if len(users) > 0 {
 		for _, user := range users {
 			teamMembers = append(teamMembers, models.TeamMember{
-			UserID:         user.ID,
-			TeamID:         team.ID,
-			Specialization: &user.Profession,
-			Deleted:        &del,
+				UserID:         user.ID,
+				TeamID:         team.ID,
+				Specialization: &user.Profession,
+				Deleted:        &del,
 			})
 		}
 

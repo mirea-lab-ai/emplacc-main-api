@@ -3,7 +3,7 @@ package service
 import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"emplacc-api/internal/utils"
 	"errors"
 	"time"
@@ -24,10 +24,10 @@ type ProjectService interface {
 }
 
 type projectService struct {
-	repo repository.ProjectRepository
+	repo ports.ProjectRepository
 }
 
-func NewProjectService(repo repository.ProjectRepository) ProjectService {
+func NewProjectService(repo ports.ProjectRepository) ProjectService {
 	return &projectService{
 		repo: repo,
 	}
@@ -39,8 +39,8 @@ func (s *projectService) GetAllProjects(page, pageSize int) ([]models.Project, i
 }
 
 func (s *projectService) SearchProjects(query, userID string, page, pageSize int) ([]models.Project, int64, error) {
-    offset := (page - 1) * pageSize
-    return s.repo.SearchProjects(query, userID, pageSize, offset)
+	offset := (page - 1) * pageSize
+	return s.repo.SearchProjects(query, userID, pageSize, offset)
 }
 
 func (s *projectService) GetProjectByID(projectID uuid.UUID) (*models.Project, error) {
@@ -106,7 +106,7 @@ func (s *projectService) CreateProject(req request.CreateProjectRequest) (uuid.U
 		return models.Status{
 			ID:        id,
 			BoardID:   boardID,
-			SortOrder:     &order,
+			SortOrder: &order,
 			Key:       &key,
 			Name:      &name,
 			Color:     &color,
@@ -120,8 +120,8 @@ func (s *projectService) CreateProject(req request.CreateProjectRequest) (uuid.U
 	}
 
 	statuses := []models.Status{
-		makeStatus(0, "To Do", "#FF0000", true),   // Начальный статус
-		makeStatus(1, "Done", "#00FF00", false),   // Конечный статус
+		makeStatus(0, "To Do", "#FF0000", true), // Начальный статус
+		makeStatus(1, "Done", "#00FF00", false), // Конечный статус
 	}
 
 	err = s.repo.CreateProjectWithBoardAndStatuses(project, mainBoard, statuses)
@@ -134,11 +134,21 @@ func (s *projectService) CreateProject(req request.CreateProjectRequest) (uuid.U
 
 func (s *projectService) UpdateProject(projectID uuid.UUID, req request.UpdateProjectRequest) error {
 	updateData := make(map[string]interface{})
-	if req.Name != nil            { updateData["name"] = *req.Name }
-	if req.Description != nil     { updateData["description"] = *req.Description }
-	if req.GitlabProjectId != nil { updateData["gitlab_project_id"] = *req.GitlabProjectId }
-	if req.GitlabUrl != nil       { updateData["gitlab_url"] = *req.GitlabUrl }
-	if req.Status != nil          { updateData["status"] = *req.Status }
+	if req.Name != nil {
+		updateData["name"] = *req.Name
+	}
+	if req.Description != nil {
+		updateData["description"] = *req.Description
+	}
+	if req.GitlabProjectId != nil {
+		updateData["gitlab_project_id"] = *req.GitlabProjectId
+	}
+	if req.GitlabUrl != nil {
+		updateData["gitlab_url"] = *req.GitlabUrl
+	}
+	if req.Status != nil {
+		updateData["status"] = *req.Status
+	}
 	if len(updateData) == 0 {
 		return errors.New("no fields to update")
 	}

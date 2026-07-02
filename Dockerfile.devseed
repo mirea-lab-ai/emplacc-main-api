@@ -1,0 +1,14 @@
+# Demo-only image: seeds a demo user, admin role, emplacc_* token and sample
+# Conveyor data, then exits. Built from the same module as the API.
+FROM golang:1.26-alpine AS builder
+ENV CGO_ENABLED=0 GOOS=linux
+WORKDIR /build
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN go build -trimpath -ldflags="-s -w" -o /devseed ./cmd/devseed
+
+FROM alpine:3.21
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /devseed /devseed
+ENTRYPOINT ["/devseed"]

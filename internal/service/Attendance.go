@@ -3,7 +3,7 @@ package service
 import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"errors"
 	"time"
 
@@ -19,10 +19,10 @@ type AttendanceService interface {
 }
 
 type attendanceService struct {
-	repo repository.AttendanceRepository
+	repo ports.AttendanceRepository
 }
 
-func NewAttendanceService(repo repository.AttendanceRepository) AttendanceService {
+func NewAttendanceService(repo ports.AttendanceRepository) AttendanceService {
 	return &attendanceService{
 		repo: repo,
 	}

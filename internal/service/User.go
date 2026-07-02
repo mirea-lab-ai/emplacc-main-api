@@ -4,7 +4,7 @@ import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
 	"emplacc-api/internal/dto/response"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"emplacc-api/internal/utils"
 	"errors"
 	"time"
@@ -14,9 +14,11 @@ import (
 
 type UserService interface {
 	GetAllUsers(page, pageSize int) ([]models.User, int64, error)
+	SearchUsers(query string, page, pageSize int) ([]models.User, int64, error)
 	GetUserById(userId uuid.UUID) (*models.User, error)
 	CreateUser(req request.UserCreateRequest) (uuid.UUID, error)
 	UpdateUser(userId uuid.UUID, req request.UpdateUserRequest) error
+	UpdateAvatarURL(userId uuid.UUID, avatarURL string) error
 	DeleteUser(userId uuid.UUID) error
 	BanUser(userId uuid.UUID) error
 	RestoreUser(req request.RestoreUserRequest) (uuid.UUID, error)
@@ -26,19 +28,29 @@ type UserService interface {
 }
 
 type userService struct {
-	repo repository.UserRepository
+	repo ports.UserRepository
 }
 
-func NewUserService(repo repository.UserRepository) UserService {
+func NewUserService(repo ports.UserRepository) UserService {
 	return &userService{
 		repo: repo,
 	}
 }
 
+func (s *userService) SearchUsers(query string, page, pageSize int) ([]models.User, int64, error) {
+	offset := (page - 1) * pageSize
+	return s.repo.SearchUsers(query, pageSize, offset)
+}
+
 func (s *userService) CreateSystemUser() (uuid.UUID, error) {
+	// Идемпотентно: если системный пользователь уже есть — возвращаем его ID
+	existing, err := s.repo.GetUserByEmail("system@system")
+	if err == nil && existing != nil {
+		return existing.ID, nil
+	}
+
 	newUUID := uuid.New()
 	now := time.Now()
-
 	user := models.User{
 		ID:            newUUID,
 		Email:         "system@system",
@@ -50,17 +62,11 @@ func (s *userService) CreateSystemUser() (uuid.UUID, error) {
 		LastName:      "Пользователь",
 		LastLogin:     now,
 		Deleted:       false,
-		TgID:          "",
-		TgUserID:      0,
-		Profession:    "",
-		UserRoles:     nil,
 	}
 
-	err := s.repo.CreateUser(user)
-	if err != nil {
+	if err := s.repo.CreateUser(user); err != nil {
 		return uuid.Nil, err
 	}
-
 	return newUUID, nil
 }
 
@@ -253,4 +259,8 @@ func (s *userService) RemoveUserRole(req request.RemoveRoleUserRequest) (respons
 	}
 
 	return deleteResponse, nil
+}
+func (s *userService) UpdateAvatarURL(userId uuid.UUID, avatarURL string) error {
+	_, err := s.repo.UpdateUser(userId, map[string]interface{}{"avatar_url": avatarURL})
+	return err
 }

@@ -15,6 +15,1369 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/llm-settings": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Получить настройки LLM",
+                "responses": {}
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Обновить настройки LLM",
+                "responses": {}
+            }
+        },
+        "/api/approval-requests": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Request approval for a dangerous action",
+                "parameters": [
+                    {
+                        "description": "Approval request",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorApprovalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/approval-requests/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Get an approval request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Approval request ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_domain.ApprovalRequest"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/approval-requests/{id}/deny": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Deny an approval request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Approval request ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Decision",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorApprovalDecisionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/approval-requests/{id}/grant": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Grant an approval request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Approval request ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Decision",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorApprovalDecisionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/conveyor/pm-import": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Import PM canon into Conveyor",
+                "parameters": [
+                    {
+                        "description": "PM import data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorPMImportRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.PMImportSummary"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/waivers/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Get a waiver",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Waiver ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_domain.Waiver"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/agent-runs": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "List work item agent runs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emplacc-api_internal_domain.AgentRun"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Register work item agent run",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Agent run data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorAgentRunRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/agent-runs/{agent_run_id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Get work item agent run",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Agent run ID",
+                        "name": "agent_run_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_domain.AgentRun"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Update work item agent run",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Agent run ID",
+                        "name": "agent_run_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Agent run update",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorAgentRunUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/agent-runs/{agent_run_id}/heartbeat": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Heartbeat work item agent run",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Agent run ID",
+                        "name": "agent_run_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/approval-requests": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "List approval requests for a work item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emplacc-api_internal_domain.ApprovalRequest"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/close": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Close work item with evidence gate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Close request",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorCloseTaskRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/criteria": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "List work item criteria",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emplacc-api_internal_domain.AcceptanceCriterion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Create work item criterion",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Criterion data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorCriterionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/criteria/{criterion_id}": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Update criterion state",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Criterion ID",
+                        "name": "criterion_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Criterion state",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorCriterionStateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/events": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "List work item events",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emplacc-api_internal_domain.ConveyorEvent"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/evidence": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "List work item evidence",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emplacc-api_internal_domain.Evidence"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Attach work item evidence",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Evidence data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorEvidenceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/evidence-summary": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Summarize a work item's evidence via LLM (draft)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorLLMTextResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/evidence/{evidence_id}/revoke": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Revoke work item evidence",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Evidence ID",
+                        "name": "evidence_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Revocation data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorRevokeEvidenceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/links": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "List work item links",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/emplacc-api_internal_domain.TaskLink"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Link work items",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Source work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Task link data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorTaskLinkRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/suggest-criteria": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Suggest acceptance criteria for a work item via LLM (draft)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorLLMTextResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/work-items/{id}/waivers": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conveyor"
+                ],
+                "summary": "Create a waiver for a work item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Work item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Waiver data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorWaiverRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_service.ConveyorMutationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_controller.conveyorErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/attendance": {
             "post": {
                 "security": [
@@ -40,7 +1403,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.AttendanceCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.AttendanceCreateRequest"
                         }
                     }
                 ],
@@ -48,7 +1411,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Посещение успешно создано",
                         "schema": {
-                            "$ref": "#/definitions/response.AttendanceUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendanceUniversalResponse"
                         }
                     },
                     "400": {
@@ -119,7 +1482,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список посещений успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.AttendancesListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendancesListResponse"
                         }
                     },
                     "400": {
@@ -183,7 +1546,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список посещений пользователя успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.AttendancesByUserId"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendancesByUserId"
                         }
                     },
                     "400": {
@@ -247,7 +1610,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Посещение успешно удалено",
                         "schema": {
-                            "$ref": "#/definitions/response.AttendanceUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendanceUniversalResponse"
                         }
                     },
                     "400": {
@@ -319,7 +1682,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.AttendanceUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.AttendanceUpdateRequest"
                         }
                     }
                 ],
@@ -327,7 +1690,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Посещение успешно обновлено",
                         "schema": {
-                            "$ref": "#/definitions/response.AttendanceUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendanceUniversalResponse"
                         }
                     },
                     "400": {
@@ -389,7 +1752,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.LoginRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.LoginRequest"
                         }
                     }
                 ],
@@ -397,7 +1760,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Успешная аутентификация",
                         "schema": {
-                            "$ref": "#/definitions/response.AuthResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AuthResponse"
                         }
                     },
                     "400": {
@@ -510,7 +1873,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Информация о пользователе",
                         "schema": {
-                            "$ref": "#/definitions/response.UserInfo"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserInfo"
                         }
                     },
                     "401": {
@@ -545,7 +1908,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.RefreshRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.RefreshRequest"
                         }
                     }
                 ],
@@ -553,7 +1916,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Новые токены и время жизни",
                         "schema": {
-                            "$ref": "#/definitions/response.RefreshResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.RefreshResponse"
                         }
                     },
                     "400": {
@@ -575,6 +1938,22 @@ const docTemplate = `{
                         }
                     }
                 }
+            }
+        },
+        "/auth/session": {
+            "post": {
+                "summary": "Создать сессию",
+                "responses": {}
+            },
+            "delete": {
+                "summary": "Завершить сессию",
+                "responses": {}
+            }
+        },
+        "/auth/session/rotate": {
+            "post": {
+                "summary": "Ротировать сессию",
+                "responses": {}
             }
         },
         "/auth/validate": {
@@ -603,13 +1982,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Токен валиден",
                         "schema": {
-                            "$ref": "#/definitions/response.TokenValidationResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TokenValidationResponse"
                         }
                     },
                     "401": {
                         "description": "Невалидный или отсутствующий токен",
                         "schema": {
-                            "$ref": "#/definitions/response.TokenValidationResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TokenValidationResponse"
                         }
                     }
                 }
@@ -640,7 +2019,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.BoardCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.BoardCreateRequest"
                         }
                     }
                 ],
@@ -648,7 +2027,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Доска успешно создана",
                         "schema": {
-                            "$ref": "#/definitions/response.BoardUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardUniversalResponse"
                         }
                     },
                     "400": {
@@ -719,7 +2098,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список досок успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.BoardListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardListResponse"
                         }
                     },
                     "400": {
@@ -783,7 +2162,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список досок успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.BoardForProjectResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardForProjectResponse"
                         }
                     },
                     "400": {
@@ -911,7 +2290,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Доска успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.BoardResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardResponse"
                         }
                     },
                     "400": {
@@ -982,7 +2361,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Доска успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.BoardUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardUniversalResponse"
                         }
                     },
                     "401": {
@@ -1045,7 +2424,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.BoardUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.BoardUpdateRequest"
                         }
                     }
                 ],
@@ -1053,7 +2432,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Доска успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.BoardUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardUniversalResponse"
                         }
                     },
                     "400": {
@@ -1095,427 +2474,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/forum-messages": {
-            "post": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Создает новое сообщение форума с указанными параметрами",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ForumMessages"
-                ],
-                "summary": "Создание нового сообщения форума",
-                "parameters": [
-                    {
-                        "description": "Данные для создания сообщения форума",
-                        "name": "forumMessage",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CreateForumMessageRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Сообщение форума успешно создано",
-                        "schema": {
-                            "$ref": "#/definitions/response.ForumMessageUniversalResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Ошибка в запросе или некорректные идентификаторы",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Нет или неверный токен",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера при создании сообщения форума",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/forum-messages/all/{page}/{pagesize}": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Получает список всех сообщений форума с учетом пагинации, исключая удаленные",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ForumMessages"
-                ],
-                "summary": "Получение списка всех сообщений форума",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Номер страницы",
-                        "name": "page",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Размер страницы",
-                        "name": "pagesize",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Список сообщений форума успешно получен",
-                        "schema": {
-                            "$ref": "#/definitions/response.ForumMessageListResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Ошибка в запросе",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Нет или неверный токен",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера при получении сообщений форума",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/forum-messages/problem/{id}/{page}/{pagesize}": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Получает список сообщений форума, связанных с указанной проблемой, с учетом пагинации",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ForumMessages"
-                ],
-                "summary": "Получение сообщений форума по ID проблемы",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID проблемы",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Номер страницы",
-                        "name": "page",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Размер страницы",
-                        "name": "pagesize",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Список сообщений форума успешно получен",
-                        "schema": {
-                            "$ref": "#/definitions/response.ForumMessageListByProblemIdResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Некорректный идентификатор проблемы или ошибка в запросе",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Нет или неверный токен",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера при получении сообщений форума",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/forum-messages/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Получает данные сообщения форума по его уникальному идентификатору",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ForumMessages"
-                ],
-                "summary": "Получение сообщения форума по ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID сообщения форума",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Сообщение форума успешно получено",
-                        "schema": {
-                            "$ref": "#/definitions/response.ForumMessageResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Некорректный идентификатор сообщения",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Нет или неверный токен",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Сообщение форума не найдено",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера при получении сообщения форума",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Логическое удаление сообщения форума по ID (поле deleted = true)",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ForumMessages"
-                ],
-                "summary": "Удаление сообщения форума",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID сообщения форума",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Сообщение форума успешно удалено",
-                        "schema": {
-                            "$ref": "#/definitions/response.ForumMessageUniversalResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Нет или неверный токен",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Сообщение форума не найдено",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера при удалении сообщения форума",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Обновляет данные сообщения форума по его ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ForumMessages"
-                ],
-                "summary": "Обновление сообщения форума",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID сообщения форума",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Данные для обновления сообщения форума",
-                        "name": "forumMessage",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.UpdateForumMessageRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Сообщение форума успешно обновлено",
-                        "schema": {
-                            "$ref": "#/definitions/response.ForumMessageUniversalResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Некорректный идентификатор или ошибка в запросе",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Нет или неверный токен",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Ошибка сервера при обновлении сообщения форума",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/problem": {
             "post": {
                 "security": [
@@ -1541,7 +2499,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ProblemCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ProblemCreateRequest"
                         }
                     }
                 ],
@@ -1549,7 +2507,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Проблема успешно создана",
                         "schema": {
-                            "$ref": "#/definitions/response.ProblemUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemUniversalResponse"
                         }
                     },
                     "400": {
@@ -1620,7 +2578,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список проблем успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ProblemListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemListResponse"
                         }
                     },
                     "400": {
@@ -1698,7 +2656,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список проблем успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ProblemsByUserId"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemsByUserId"
                         }
                     },
                     "400": {
@@ -1762,7 +2720,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проблема успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.ProblemResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemResponse"
                         }
                     },
                     "400": {
@@ -1833,7 +2791,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проблема успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.ProblemUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemUniversalResponse"
                         }
                     },
                     "404": {
@@ -1887,7 +2845,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ProblemUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ProblemUpdateRequest"
                         }
                     }
                 ],
@@ -1895,7 +2853,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проблема успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.ProblemUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemUniversalResponse"
                         }
                     },
                     "400": {
@@ -1953,7 +2911,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.CreateProjectRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.CreateProjectRequest"
                         }
                     }
                 ],
@@ -1961,7 +2919,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Проект успешно создан",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectUniversalResponse"
                         }
                     },
                     "400": {
@@ -2032,7 +2990,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список проектов успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectListResponse"
                         }
                     },
                     "400": {
@@ -2072,7 +3030,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Ищет проекты по имени, описанию или GitLab URL с автодополнением после каждого введенного символа. Поддерживает автоматическую замену раскладки клавиатуры (английская-русская) для расширенного поиска и пагинацию. Проекты сортируются: сначала проекты где пользователь создатель, потом остальные.",
+                "description": "Ищет проекты по имени, описанию или GitLab URL с автодополнением после каждого введенного символа. Поддерживает автоматическую замену раскладки клавиатуры (английская-русская) для расширенного поиска и пагинацию. Проекты сортируются: сначала проекты где пользователь состоит, потом создатель, потом остальные.",
                 "consumes": [
                     "application/json"
                 ],
@@ -2119,7 +3077,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Результаты поиска проектов",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectSearchResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectSearchResponse"
                         }
                     },
                     "400": {
@@ -2183,7 +3141,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список проектов успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectByTeamResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectByTeamResponse"
                         }
                     },
                     "400": {
@@ -2258,7 +3216,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.ProjectResponse"
+                                "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectResponse"
                             }
                         }
                     },
@@ -2332,7 +3290,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проект успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectResponse"
                         }
                     },
                     "400": {
@@ -2403,7 +3361,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проект успешно удален",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectUniversalResponse"
                         }
                     },
                     "401": {
@@ -2466,7 +3424,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UpdateProjectRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.UpdateProjectRequest"
                         }
                     }
                 ],
@@ -2474,7 +3432,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проект успешно обновлен",
                         "schema": {
-                            "$ref": "#/definitions/response.ProjectUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectUniversalResponse"
                         }
                     },
                     "400": {
@@ -2532,7 +3490,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ReportCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ReportCreateRequest"
                         }
                     }
                 ],
@@ -2540,7 +3498,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Отчет успешно создан",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "400": {
@@ -2611,7 +3569,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список отчетов успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportListResponse"
                         }
                     },
                     "400": {
@@ -2685,7 +3643,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.CompletedWorkUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.CompletedWorkUpdateRequest"
                         }
                     }
                 ],
@@ -2693,7 +3651,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Выполненная работа успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "400": {
@@ -2788,7 +3746,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ReportsByDateInXLSX"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ReportsByDateInXLSX"
                         }
                     }
                 ],
@@ -2860,7 +3818,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Запрос на помощь успешно удален",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "400": {
@@ -2932,7 +3890,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.HelpRequestUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.HelpRequestUpdateRequest"
                         }
                     }
                 ],
@@ -2940,7 +3898,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Запрос на помощь успешно обновлен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "400": {
@@ -3004,7 +3962,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список запросов на помощь успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.HelpRequestsForUser"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.HelpRequestsForUser"
                         }
                     },
                     "400": {
@@ -3068,7 +4026,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список отчетов успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportListByProjectId"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportListByProjectId"
                         }
                     },
                     "400": {
@@ -3141,7 +4099,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список отчетов успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportListByTaskId"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportListByTaskId"
                         }
                     },
                     "400": {
@@ -3215,7 +4173,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TomorrowPlansUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TomorrowPlansUpdateRequest"
                         }
                     }
                 ],
@@ -3223,7 +4181,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Планы на завтра успешно обновлены",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "400": {
@@ -3301,7 +4259,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список отчетов успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportListResponse"
                         }
                     },
                     "400": {
@@ -3365,7 +4323,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Отчет успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportFullResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportFullResponse"
                         }
                     },
                     "400": {
@@ -3427,7 +4385,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Отчет успешно удален",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "401": {
@@ -3490,7 +4448,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ReportReplaceRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ReportReplaceRequest"
                         }
                     }
                 ],
@@ -3498,7 +4456,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Отчет успешно обновлен",
                         "schema": {
-                            "$ref": "#/definitions/response.ReportUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse"
                         }
                     },
                     "400": {
@@ -3565,7 +4523,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.RoleCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.RoleCreateRequest"
                         }
                     }
                 ],
@@ -3573,7 +4531,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Роль успешно создана",
                         "schema": {
-                            "$ref": "#/definitions/response.RoleUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.RoleUniversalResponse"
                         }
                     },
                     "400": {
@@ -3644,7 +4602,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список ролей успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.GetAllRolesResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetAllRolesResponse"
                         }
                     },
                     "400": {
@@ -3708,7 +4666,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль пользователя успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.GetRoleByUserId"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetRoleByUserId"
                         }
                     },
                     "400": {
@@ -3781,7 +4739,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.GetRoleResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetRoleResponse"
                         }
                     },
                     "400": {
@@ -3852,7 +4810,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.RoleUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.RoleUniversalResponse"
                         }
                     },
                     "401": {
@@ -3915,7 +4873,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.RoleUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.RoleUpdateRequest"
                         }
                     }
                 ],
@@ -3923,7 +4881,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.RoleUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.RoleUniversalResponse"
                         }
                     },
                     "400": {
@@ -3981,7 +4939,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.CreateStatusRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.CreateStatusRequest"
                         }
                     }
                 ],
@@ -3989,7 +4947,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Статус успешно создан",
                         "schema": {
-                            "$ref": "#/definitions/response.StatusUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusUniversalResponse"
                         }
                     },
                     "400": {
@@ -4057,7 +5015,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список статусов",
                         "schema": {
-                            "$ref": "#/definitions/response.StatusListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusListResponse"
                         }
                     },
                     "400": {
@@ -4118,7 +5076,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список статусов для доски",
                         "schema": {
-                            "$ref": "#/definitions/response.StatusByBoardIdResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusByBoardIdResponse"
                         }
                     },
                     "400": {
@@ -4179,7 +5137,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Информация о статусе",
                         "schema": {
-                            "$ref": "#/definitions/response.StatusResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusResponse"
                         }
                     },
                     "400": {
@@ -4250,7 +5208,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Статус успешно удален",
                         "schema": {
-                            "$ref": "#/definitions/response.StatusUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusUniversalResponse"
                         }
                     },
                     "400": {
@@ -4322,7 +5280,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UpdateStatusRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.UpdateStatusRequest"
                         }
                     }
                 ],
@@ -4330,7 +5288,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Статус успешно обновлен",
                         "schema": {
-                            "$ref": "#/definitions/response.StatusUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusUniversalResponse"
                         }
                     },
                     "400": {
@@ -4397,7 +5355,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.SubscriptionCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.SubscriptionCreateRequest"
                         }
                     }
                 ],
@@ -4405,7 +5363,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Подписка успешно создана",
                         "schema": {
-                            "$ref": "#/definitions/response.SubscriptionUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionUniversalResponse"
                         }
                     },
                     "400": {
@@ -4476,7 +5434,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список подписок успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.SubscriptionListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionListResponse"
                         }
                     },
                     "400": {
@@ -4561,7 +5519,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список подписок успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.SubscriptionListBySubObjectResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionListBySubObjectResponse"
                         }
                     },
                     "400": {
@@ -4639,7 +5597,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список подписок успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.SubscriptionListByUserIdResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionListByUserIdResponse"
                         }
                     },
                     "400": {
@@ -4703,7 +5661,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Подписка успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.SubscriptionResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse"
                         }
                     },
                     "400": {
@@ -4774,7 +5732,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Подписка успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.SubscriptionUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionUniversalResponse"
                         }
                     },
                     "401": {
@@ -4832,7 +5790,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TaskCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TaskCreateRequest"
                         }
                     }
                 ],
@@ -4840,7 +5798,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Задача успешно создана",
                         "schema": {
-                            "$ref": "#/definitions/response.TaskUniversaResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskUniversaResponse"
                         }
                     },
                     "400": {
@@ -4920,7 +5878,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список задач успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.TaskListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskListResponse"
                         }
                     },
                     "400": {
@@ -5052,6 +6010,48 @@ const docTemplate = `{
                 }
             }
         },
+        "/task/improve-text": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Улучшает текст без привязки к конкретной задаче — для использования при создании задачи",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Улучшить произвольный текст для описания задачи через LLM",
+                "parameters": [
+                    {
+                        "description": "Текст для улучшения",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ImproveReportRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "improved_text",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/task/move": {
             "post": {
                 "security": [
@@ -5077,7 +6077,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.MoveTaskToAnotherStatus"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.MoveTaskToAnotherStatus"
                         }
                     }
                 ],
@@ -5193,7 +6193,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Результаты поиска задач",
                         "schema": {
-                            "$ref": "#/definitions/response.TaskSearchResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskSearchResponse"
                         }
                     },
                     "400": {
@@ -5271,7 +6271,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список задач успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.UserTasksResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserTasksResponse"
                         }
                     },
                     "400": {
@@ -5349,7 +6349,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список активных задач успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.UserTasksResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserTasksResponse"
                         }
                     },
                     "400": {
@@ -5434,7 +6434,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список задач успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.UserProjectTasksResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserProjectTasksResponse"
                         }
                     },
                     "400": {
@@ -5456,7 +6456,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "Пользователь или проект не найдены",
+                        "description": "user or project not found",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -5507,11 +6507,11 @@ const docTemplate = `{
                     "200": {
                         "description": "Задача успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.GetTaskByIDResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetTaskByIDResponse"
                         }
                     },
                     "400": {
-                        "description": "Некорректный идентификатор задачи",
+                        "description": "invalid task id",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -5529,7 +6529,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "Задача не найдена",
+                        "description": "task not found",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -5578,7 +6578,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Задача успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.TaskUniversaResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskUniversaResponse"
                         }
                     },
                     "401": {
@@ -5591,7 +6591,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "Задача не найдена",
+                        "description": "task not found",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -5641,7 +6641,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TaskUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TaskUpdateRequest"
                         }
                     }
                 ],
@@ -5649,7 +6649,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Задача успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.TaskUniversaResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskUniversaResponse"
                         }
                     },
                     "400": {
@@ -5671,7 +6671,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "Задача не найдена",
+                        "description": "task not found",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -5723,7 +6723,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ImproveReportRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.ImproveReportRequest"
                         }
                     }
                 ],
@@ -5731,7 +6731,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Улучшенный отчет",
                         "schema": {
-                            "$ref": "#/definitions/response.ImprovedReportResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.ImprovedReportResponse"
                         }
                     },
                     "400": {
@@ -5744,7 +6744,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "Задача не найдена",
+                        "description": "task not found",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -5789,7 +6789,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamCreateRequest"
                         }
                     }
                 ],
@@ -5797,7 +6797,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Команда успешно создана",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalResponse"
                         }
                     },
                     "400": {
@@ -5852,7 +6852,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список команд успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamsListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamsListResponse"
                         }
                     },
                     "401": {
@@ -5901,7 +6901,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamUpdateMemberRoleRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamUpdateMemberRoleRequest"
                         }
                     }
                 ],
@@ -5909,7 +6909,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalUserResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalUserResponse"
                         }
                     },
                     "400": {
@@ -5976,7 +6976,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamAddProjectRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamAddProjectRequest"
                         }
                     }
                 ],
@@ -5984,7 +6984,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проект успешно привязан к команде",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalProjectResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalProjectResponse"
                         }
                     },
                     "400": {
@@ -6040,7 +7040,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamDeleteProjectRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamDeleteProjectRequest"
                         }
                     }
                 ],
@@ -6048,7 +7048,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Проект успешно отвязан от команды",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalProjectResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalProjectResponse"
                         }
                     },
                     "400": {
@@ -6121,7 +7121,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список команд успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamsListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamsListResponse"
                         }
                     },
                     "400": {
@@ -6188,7 +7188,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamAddUsersRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamAddUsersRequest"
                         }
                     }
                 ],
@@ -6196,7 +7196,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно добавлен в команду",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalUserResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalUserResponse"
                         }
                     },
                     "400": {
@@ -6252,7 +7252,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamDeleteUserRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamDeleteUserRequest"
                         }
                     }
                 ],
@@ -6260,7 +7260,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно удален из команды",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalUserResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalUserResponse"
                         }
                     },
                     "400": {
@@ -6333,7 +7333,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список команд успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamsListResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamsListResponse"
                         }
                     },
                     "400": {
@@ -6406,7 +7406,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Команда успешно получена",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamResponse"
                         }
                     },
                     "400": {
@@ -6477,7 +7477,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Команда успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalResponse"
                         }
                     },
                     "401": {
@@ -6540,7 +7540,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.TeamUpdateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.TeamUpdateRequest"
                         }
                     }
                 ],
@@ -6548,7 +7548,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Команда успешно обновлена",
                         "schema": {
-                            "$ref": "#/definitions/response.TeamUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamUniversalResponse"
                         }
                     },
                     "400": {
@@ -6571,6 +7571,43 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Ошибка сервера при обновлении команды",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/refresh": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Генерирует новый presigned URL для объекта по его пути",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Обновить presigned URL для файла",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Путь к объекту (например: images/uuid.jpg)",
+                        "name": "path",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "url",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -6606,7 +7643,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserCreateRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.UserCreateRequest"
                         }
                     }
                 ],
@@ -6688,7 +7725,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Список пользователей успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.GetAllUsersResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetAllUsersResponse"
                         }
                     },
                     "400": {
@@ -6752,7 +7789,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно удален",
                         "schema": {
-                            "$ref": "#/definitions/response.UserUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse"
                         }
                     },
                     "401": {
@@ -6775,6 +7812,40 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Ошибка сервера при удалении пользователя",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/me": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Возвращает данные пользователя из токена (sess_*, emplacc_*, JWT)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Текущий пользователь",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -6810,7 +7881,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.RestoreUserRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.RestoreUserRequest"
                         }
                     }
                 ],
@@ -6818,7 +7889,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно восстановлен",
                         "schema": {
-                            "$ref": "#/definitions/response.UserUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse"
                         }
                     },
                     "400": {
@@ -6876,7 +7947,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.AddRoleUserRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.AddRoleUserRequest"
                         }
                     }
                 ],
@@ -6884,7 +7955,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль успешно добавлена",
                         "schema": {
-                            "$ref": "#/definitions/response.AddRoleUserResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.AddRoleUserResponse"
                         }
                     },
                     "400": {
@@ -6940,7 +8011,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.RemoveRoleUserRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.RemoveRoleUserRequest"
                         }
                     }
                 ],
@@ -6948,7 +8019,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Роль успешно удалена",
                         "schema": {
-                            "$ref": "#/definitions/response.RemoveRoleUserResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.RemoveRoleUserResponse"
                         }
                     },
                     "400": {
@@ -7021,7 +8092,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно получен",
                         "schema": {
-                            "$ref": "#/definitions/response.GetUserResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.GetUserResponse"
                         }
                     },
                     "400": {
@@ -7093,7 +8164,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UpdateUserRequest"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_request.UpdateUserRequest"
                         }
                     }
                 ],
@@ -7101,7 +8172,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно обновлен",
                         "schema": {
-                            "$ref": "#/definitions/response.UserUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse"
                         }
                     },
                     "400": {
@@ -7163,7 +8234,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Пользователь успешно удален",
                         "schema": {
-                            "$ref": "#/definitions/response.UserUniversalResponse"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse"
                         }
                     },
                     "401": {
@@ -7198,7 +8269,336 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "request.AddRoleUserRequest": {
+        "emplacc-api_internal_domain.AcceptanceCriterion": {
+            "type": "object",
+            "properties": {
+                "ac_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "spec_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "state": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_domain.AgentRun": {
+            "type": "object",
+            "properties": {
+                "actor_type": {
+                    "type": "string"
+                },
+                "agent_id": {
+                    "type": "string"
+                },
+                "api_token_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "finished_at": {
+                    "type": "string"
+                },
+                "harness": {
+                    "type": "string"
+                },
+                "heartbeat_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "log_uri": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "on_behalf_of_user_id": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "work_item_id": {
+                    "type": "string"
+                },
+                "workspace_uri": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_domain.ApprovalRequest": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string"
+                },
+                "actor_type": {
+                    "type": "string"
+                },
+                "agent_id": {
+                    "type": "string"
+                },
+                "api_token_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "decided_at": {
+                    "type": "string"
+                },
+                "decided_by": {
+                    "type": "string"
+                },
+                "decision_reason": {
+                    "type": "string"
+                },
+                "expires_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "on_behalf_of_user_id": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "requested_by": {
+                    "type": "string"
+                },
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "risk_level": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "work_item_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_domain.ConveyorEvent": {
+            "type": "object",
+            "properties": {
+                "actor_id": {
+                    "type": "string"
+                },
+                "actor_type": {
+                    "type": "string"
+                },
+                "agent_id": {
+                    "type": "string"
+                },
+                "api_token_id": {
+                    "type": "string"
+                },
+                "causation_id": {
+                    "type": "string"
+                },
+                "correlation_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "idempotency_key": {
+                    "type": "string"
+                },
+                "on_behalf_of_user_id": {
+                    "type": "string"
+                },
+                "payload": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "schema_version": {
+                    "type": "integer"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "work_item_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_domain.Evidence": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "criterion_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "revoked": {
+                    "type": "boolean"
+                },
+                "revoked_at": {
+                    "type": "string"
+                },
+                "revoked_by": {
+                    "type": "string"
+                },
+                "revoked_reason": {
+                    "type": "string"
+                },
+                "sha256": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                },
+                "verdict": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_domain.TaskLink": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "link_type": {
+                    "type": "string"
+                },
+                "source_task_id": {
+                    "type": "string"
+                },
+                "target_task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_domain.Waiver": {
+            "type": "object",
+            "properties": {
+                "approval_request_id": {
+                    "type": "string"
+                },
+                "approved_by": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "criterion_id": {
+                    "type": "string"
+                },
+                "expires_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "scope": {
+                    "type": "string"
+                },
+                "work_item_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_dto_request.AddRoleUserRequest": {
             "type": "object",
             "properties": {
                 "assigner_id": {
@@ -7212,7 +8612,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.AttendanceCreateRequest": {
+        "emplacc-api_internal_dto_request.AttendanceCreateRequest": {
             "type": "object",
             "properties": {
                 "actual_start": {
@@ -7247,7 +8647,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.AttendanceUpdateRequest": {
+        "emplacc-api_internal_dto_request.AttendanceUpdateRequest": {
             "type": "object",
             "properties": {
                 "actual_start": {
@@ -7279,7 +8679,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.BoardCreateRequest": {
+        "emplacc-api_internal_dto_request.BoardCreateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7293,7 +8693,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.BoardUpdateRequest": {
+        "emplacc-api_internal_dto_request.BoardUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7304,7 +8704,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.CompletedWorkCreateRequest": {
+        "emplacc-api_internal_dto_request.CompletedWorkCreateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7315,7 +8715,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.CompletedWorkReplaceRequest": {
+        "emplacc-api_internal_dto_request.CompletedWorkReplaceRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7329,7 +8729,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.CompletedWorkUpdateRequest": {
+        "emplacc-api_internal_dto_request.CompletedWorkUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7340,35 +8740,10 @@ const docTemplate = `{
                 }
             }
         },
-        "request.CreateForumMessageRequest": {
-            "type": "object",
-            "required": [
-                "creator_id",
-                "description",
-                "problem_id"
-            ],
-            "properties": {
-                "creator_id": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "array",
-                    "maxItems": 255,
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "problem_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.CreateProjectRequest": {
+        "emplacc-api_internal_dto_request.CreateProjectRequest": {
             "type": "object",
             "required": [
                 "created_by",
-                "gitlab_project_id",
-                "gitlab_url",
                 "name"
             ],
             "properties": {
@@ -7383,7 +8758,8 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "gitlab_url": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 255
                 },
                 "name": {
                     "type": "string",
@@ -7396,7 +8772,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.CreateStatusRequest": {
+        "emplacc-api_internal_dto_request.CreateStatusRequest": {
             "type": "object",
             "required": [
                 "color",
@@ -7426,7 +8802,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.HelpRequest": {
+        "emplacc-api_internal_dto_request.HelpRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7440,7 +8816,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.HelpRequestReplaceRequest": {
+        "emplacc-api_internal_dto_request.HelpRequestReplaceRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7457,7 +8833,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.HelpRequestUpdateRequest": {
+        "emplacc-api_internal_dto_request.HelpRequestUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7471,7 +8847,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ImproveReportRequest": {
+        "emplacc-api_internal_dto_request.ImproveReportRequest": {
             "type": "object",
             "required": [
                 "user_text"
@@ -7484,7 +8860,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.LoginRequest": {
+        "emplacc-api_internal_dto_request.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -7499,7 +8875,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.MoveTaskToAnotherStatus": {
+        "emplacc-api_internal_dto_request.MoveTaskToAnotherStatus": {
             "type": "object",
             "required": [
                 "status_id",
@@ -7514,7 +8890,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ProblemCreateRequest": {
+        "emplacc-api_internal_dto_request.ProblemCreateRequest": {
             "type": "object",
             "properties": {
                 "creator_id": {
@@ -7531,7 +8907,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ProblemUpdateRequest": {
+        "emplacc-api_internal_dto_request.ProblemUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7539,10 +8915,13 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         },
-        "request.RefreshRequest": {
+        "emplacc-api_internal_dto_request.RefreshRequest": {
             "type": "object",
             "required": [
                 "refresh_token"
@@ -7553,7 +8932,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.RemoveRoleUserRequest": {
+        "emplacc-api_internal_dto_request.RemoveRoleUserRequest": {
             "type": "object",
             "properties": {
                 "role_id": {
@@ -7564,25 +8943,25 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ReportCreateRequest": {
+        "emplacc-api_internal_dto_request.ReportCreateRequest": {
             "type": "object",
             "properties": {
                 "complete_work": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/request.CompletedWorkCreateRequest"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_request.CompletedWorkCreateRequest"
                     }
                 },
                 "help": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/request.HelpRequest"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_request.HelpRequest"
                     }
                 },
                 "plan_tomorrow": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/request.TomorrowPlanCreateRequest"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_request.TomorrowPlanCreateRequest"
                     }
                 },
                 "problems": {
@@ -7599,7 +8978,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ReportReplaceRequest": {
+        "emplacc-api_internal_dto_request.ReportReplaceRequest": {
             "type": "object",
             "properties": {
                 "checked": {
@@ -7608,19 +8987,19 @@ const docTemplate = `{
                 "complete_work": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/request.CompletedWorkReplaceRequest"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_request.CompletedWorkReplaceRequest"
                     }
                 },
                 "help": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/request.HelpRequestReplaceRequest"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_request.HelpRequestReplaceRequest"
                     }
                 },
                 "plan_tomorrow": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/request.TomorrowPlanReplaceRequest"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_request.TomorrowPlanReplaceRequest"
                     }
                 },
                 "problems": {
@@ -7637,7 +9016,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ReportsByDateInXLSX": {
+        "emplacc-api_internal_dto_request.ReportsByDateInXLSX": {
             "type": "object",
             "properties": {
                 "end_date": {
@@ -7648,7 +9027,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.RestoreUserRequest": {
+        "emplacc-api_internal_dto_request.RestoreUserRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -7656,7 +9035,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.RoleCreateRequest": {
+        "emplacc-api_internal_dto_request.RoleCreateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7667,7 +9046,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.RoleUpdateRequest": {
+        "emplacc-api_internal_dto_request.RoleUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7678,7 +9057,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.SubscriptionCreateRequest": {
+        "emplacc-api_internal_dto_request.SubscriptionCreateRequest": {
             "type": "object",
             "properties": {
                 "subscription_id": {
@@ -7692,7 +9071,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TaskCreateRequest": {
+        "emplacc-api_internal_dto_request.TaskCreateRequest": {
             "type": "object",
             "required": [
                 "creator_id",
@@ -7739,7 +9118,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TaskUpdateRequest": {
+        "emplacc-api_internal_dto_request.TaskUpdateRequest": {
             "type": "object",
             "properties": {
                 "assigned_to": {
@@ -7773,7 +9152,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamAddProjectRequest": {
+        "emplacc-api_internal_dto_request.TeamAddProjectRequest": {
             "type": "object",
             "properties": {
                 "project_id": {
@@ -7784,7 +9163,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamAddUsersRequest": {
+        "emplacc-api_internal_dto_request.TeamAddUsersRequest": {
             "type": "object",
             "properties": {
                 "team_id": {
@@ -7798,7 +9177,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamCreateRequest": {
+        "emplacc-api_internal_dto_request.TeamCreateRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -7818,7 +9197,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamDeleteProjectRequest": {
+        "emplacc-api_internal_dto_request.TeamDeleteProjectRequest": {
             "type": "object",
             "properties": {
                 "project_id": {
@@ -7829,7 +9208,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamDeleteUserRequest": {
+        "emplacc-api_internal_dto_request.TeamDeleteUserRequest": {
             "type": "object",
             "properties": {
                 "team_id": {
@@ -7840,7 +9219,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamUpdateMemberRoleRequest": {
+        "emplacc-api_internal_dto_request.TeamUpdateMemberRoleRequest": {
             "type": "object",
             "required": [
                 "specialization",
@@ -7859,7 +9238,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TeamUpdateRequest": {
+        "emplacc-api_internal_dto_request.TeamUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7870,7 +9249,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TomorrowPlanCreateRequest": {
+        "emplacc-api_internal_dto_request.TomorrowPlanCreateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7881,7 +9260,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TomorrowPlanReplaceRequest": {
+        "emplacc-api_internal_dto_request.TomorrowPlanReplaceRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7892,7 +9271,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.TomorrowPlansUpdateRequest": {
+        "emplacc-api_internal_dto_request.TomorrowPlansUpdateRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7900,25 +9279,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.UpdateForumMessageRequest": {
-            "type": "object",
-            "properties": {
-                "creator_id": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "array",
-                    "maxItems": 255,
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "problem_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.UpdateProjectRequest": {
+        "emplacc-api_internal_dto_request.UpdateProjectRequest": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7938,7 +9299,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.UpdateStatusRequest": {
+        "emplacc-api_internal_dto_request.UpdateStatusRequest": {
             "type": "object",
             "properties": {
                 "board_id": {
@@ -7964,7 +9325,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.UpdateUserRequest": {
+        "emplacc-api_internal_dto_request.UpdateUserRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -7996,7 +9357,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.UserCreateRequest": {
+        "emplacc-api_internal_dto_request.UserCreateRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -8025,7 +9386,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AddRoleUserResponse": {
+        "emplacc-api_internal_dto_response.AddRoleUserResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -8039,7 +9400,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AttendanceResponse": {
+        "emplacc-api_internal_dto_response.AttendanceResponse": {
             "type": "object",
             "properties": {
                 "actual_start": {
@@ -8086,7 +9447,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AttendanceUniversalResponse": {
+        "emplacc-api_internal_dto_response.AttendanceUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8097,13 +9458,13 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AttendancesByUserId": {
+        "emplacc-api_internal_dto_response.AttendancesByUserId": {
             "type": "object",
             "properties": {
                 "attendances": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.AttendanceResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendanceResponse"
                     }
                 },
                 "user_id": {
@@ -8111,13 +9472,13 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AttendancesListResponse": {
+        "emplacc-api_internal_dto_response.AttendancesListResponse": {
             "type": "object",
             "properties": {
                 "attendances": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.AttendanceResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.AttendanceResponse"
                     }
                 },
                 "page": {
@@ -8131,7 +9492,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AuthResponse": {
+        "emplacc-api_internal_dto_response.AuthResponse": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -8163,13 +9524,13 @@ const docTemplate = `{
                 }
             }
         },
-        "response.BoardForProjectResponse": {
+        "emplacc-api_internal_dto_response.BoardForProjectResponse": {
             "type": "object",
             "properties": {
                 "boards": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.BoardResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardResponse"
                     }
                 },
                 "project_id": {
@@ -8177,13 +9538,13 @@ const docTemplate = `{
                 }
             }
         },
-        "response.BoardListResponse": {
+        "emplacc-api_internal_dto_response.BoardListResponse": {
             "type": "object",
             "properties": {
                 "boards": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.BoardResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardResponse"
                     }
                 },
                 "page": {
@@ -8197,7 +9558,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.BoardRef": {
+        "emplacc-api_internal_dto_response.BoardRef": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8211,7 +9572,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.BoardResponse": {
+        "emplacc-api_internal_dto_response.BoardResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -8232,7 +9593,7 @@ const docTemplate = `{
                 "statuses": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.StatusResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusResponse"
                     }
                 },
                 "updated_at": {
@@ -8240,7 +9601,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.BoardUniversalResponse": {
+        "emplacc-api_internal_dto_response.BoardUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8251,7 +9612,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.CompletedWork": {
+        "emplacc-api_internal_dto_response.CompletedWork": {
             "type": "object",
             "properties": {
                 "description": {
@@ -8265,7 +9626,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.CompletedWorkWithTask": {
+        "emplacc-api_internal_dto_response.CompletedWorkWithTask": {
             "type": "object",
             "properties": {
                 "description": {
@@ -8275,91 +9636,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "task": {
-                    "$ref": "#/definitions/response.TaskForReport"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskForReport"
                 }
             }
         },
-        "response.ForumMessageListByProblemIdResponse": {
-            "type": "object",
-            "properties": {
-                "messages": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/response.ForumMessageResponse"
-                    }
-                },
-                "page": {
-                    "type": "integer"
-                },
-                "page_size": {
-                    "type": "integer"
-                },
-                "problem_id": {
-                    "type": "string"
-                },
-                "total_count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "response.ForumMessageListResponse": {
-            "type": "object",
-            "properties": {
-                "messages": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/response.ForumMessageResponse"
-                    }
-                },
-                "page": {
-                    "type": "integer"
-                },
-                "page_size": {
-                    "type": "integer"
-                },
-                "total_count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "response.ForumMessageResponse": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "creator_id": {
-                    "type": "string"
-                },
-                "desctription": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "id": {
-                    "type": "string"
-                },
-                "problem_id": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "response.ForumMessageUniversalResponse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "response.GetAllRolesResponse": {
+        "emplacc-api_internal_dto_response.GetAllRolesResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8371,7 +9652,7 @@ const docTemplate = `{
                 "roles": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.GetRoleResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.GetRoleResponse"
                     }
                 },
                 "total_count": {
@@ -8379,7 +9660,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.GetAllUsersResponse": {
+        "emplacc-api_internal_dto_response.GetAllUsersResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8394,23 +9675,23 @@ const docTemplate = `{
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.GetUserResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.GetUserResponse"
                     }
                 }
             }
         },
-        "response.GetRoleByUserId": {
+        "emplacc-api_internal_dto_response.GetRoleByUserId": {
             "type": "object",
             "properties": {
                 "role": {
-                    "$ref": "#/definitions/response.GetRoleResponse"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.GetRoleResponse"
                 },
                 "user_id": {
                     "type": "string"
                 }
             }
         },
-        "response.GetRoleResponse": {
+        "emplacc-api_internal_dto_response.GetRoleResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -8430,14 +9711,14 @@ const docTemplate = `{
                 }
             }
         },
-        "response.GetTaskByIDResponse": {
+        "emplacc-api_internal_dto_response.GetTaskByIDResponse": {
             "type": "object",
             "properties": {
                 "assigned_to": {
                     "description": "Связь с users",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/response.UserShort"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                         }
                     ]
                 },
@@ -8451,7 +9732,7 @@ const docTemplate = `{
                     "description": "Связь с users",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/response.UserShort"
+                            "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                         }
                     ]
                 },
@@ -8490,9 +9771,12 @@ const docTemplate = `{
                 }
             }
         },
-        "response.GetUserResponse": {
+        "emplacc-api_internal_dto_response.GetUserResponse": {
             "type": "object",
             "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
                 "created_at": {
                     "type": "string"
                 },
@@ -8528,7 +9812,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.HelpRequestItem": {
+        "emplacc-api_internal_dto_response.HelpRequestItem": {
             "type": "object",
             "properties": {
                 "description": {
@@ -8545,11 +9829,11 @@ const docTemplate = `{
                 }
             }
         },
-        "response.HelpRequestWithAssignerID": {
+        "emplacc-api_internal_dto_response.HelpRequestWithAssignerID": {
             "type": "object",
             "properties": {
                 "help_request": {
-                    "$ref": "#/definitions/response.HelpRequestItem"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.HelpRequestItem"
                 },
                 "user_first_name": {
                     "type": "string"
@@ -8559,18 +9843,18 @@ const docTemplate = `{
                 }
             }
         },
-        "response.HelpRequestsForUser": {
+        "emplacc-api_internal_dto_response.HelpRequestsForUser": {
             "type": "object",
             "properties": {
                 "help_requests": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.HelpRequestWithAssignerID"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.HelpRequestWithAssignerID"
                     }
                 }
             }
         },
-        "response.ImprovedReportResponse": {
+        "emplacc-api_internal_dto_response.ImprovedReportResponse": {
             "type": "object",
             "properties": {
                 "improved_text": {
@@ -8590,7 +9874,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.InTaskBoard": {
+        "emplacc-api_internal_dto_response.InTaskBoard": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8601,7 +9885,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.InTaskProject": {
+        "emplacc-api_internal_dto_response.InTaskProject": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8612,7 +9896,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProblemListResponse": {
+        "emplacc-api_internal_dto_response.ProblemListResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8624,7 +9908,7 @@ const docTemplate = `{
                 "problems": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProblemResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemResponse"
                     }
                 },
                 "total_count": {
@@ -8632,7 +9916,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProblemResponse": {
+        "emplacc-api_internal_dto_response.ProblemResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -8658,7 +9942,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProblemUniversalResponse": {
+        "emplacc-api_internal_dto_response.ProblemUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8669,7 +9953,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProblemsByUserId": {
+        "emplacc-api_internal_dto_response.ProblemsByUserId": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8681,7 +9965,7 @@ const docTemplate = `{
                 "problems": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProblemResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemResponse"
                     }
                 },
                 "total_count": {
@@ -8692,18 +9976,18 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProjectByTeamResponse": {
+        "emplacc-api_internal_dto_response.ProjectByTeamResponse": {
             "type": "object",
             "properties": {
                 "projects": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProjectResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectResponse"
                     }
                 }
             }
         },
-        "response.ProjectForSearchResponse": {
+        "emplacc-api_internal_dto_response.ProjectForSearchResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -8713,7 +9997,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "created_by_user": {
-                    "$ref": "#/definitions/response.UserShort"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                 },
                 "description": {
                     "type": "string"
@@ -8738,7 +10022,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProjectListResponse": {
+        "emplacc-api_internal_dto_response.ProjectListResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8750,7 +10034,7 @@ const docTemplate = `{
                 "projects": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProjectResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectResponse"
                     }
                 },
                 "total_count": {
@@ -8758,7 +10042,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProjectResponse": {
+        "emplacc-api_internal_dto_response.ProjectResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -8790,7 +10074,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProjectSearchResponse": {
+        "emplacc-api_internal_dto_response.ProjectSearchResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8802,7 +10086,7 @@ const docTemplate = `{
                 "projects": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProjectForSearchResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectForSearchResponse"
                     }
                 },
                 "query": {
@@ -8813,7 +10097,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProjectShort": {
+        "emplacc-api_internal_dto_response.ProjectShort": {
             "type": "object",
             "properties": {
                 "created_by": {
@@ -8833,7 +10117,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ProjectUniversalResponse": {
+        "emplacc-api_internal_dto_response.ProjectUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -8844,7 +10128,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.RefreshResponse": {
+        "emplacc-api_internal_dto_response.RefreshResponse": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -8867,7 +10151,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.RemoveRoleUserResponse": {
+        "emplacc-api_internal_dto_response.RemoveRoleUserResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -8881,7 +10165,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ReportFullResponse": {
+        "emplacc-api_internal_dto_response.ReportFullResponse": {
             "type": "object",
             "properties": {
                 "checked": {
@@ -8890,7 +10174,7 @@ const docTemplate = `{
                 "completed_work": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.CompletedWorkWithTask"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.CompletedWorkWithTask"
                     }
                 },
                 "created_at": {
@@ -8899,7 +10183,7 @@ const docTemplate = `{
                 "help_requests": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.HelpRequestItem"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.HelpRequestItem"
                     }
                 },
                 "id": {
@@ -8908,13 +10192,13 @@ const docTemplate = `{
                 "plan_tomorrow": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TomorrowPlansWithTask"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TomorrowPlansWithTask"
                     }
                 },
                 "problem": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProblemResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemResponse"
                     }
                 },
                 "report_date": {
@@ -8927,11 +10211,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_info": {
-                    "$ref": "#/definitions/response.UserShort"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                 }
             }
         },
-        "response.ReportListByProjectId": {
+        "emplacc-api_internal_dto_response.ReportListByProjectId": {
             "type": "object",
             "properties": {
                 "project_id": {
@@ -8940,18 +10224,18 @@ const docTemplate = `{
                 "reports": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ReportResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportResponse"
                     }
                 }
             }
         },
-        "response.ReportListByTaskId": {
+        "emplacc-api_internal_dto_response.ReportListByTaskId": {
             "type": "object",
             "properties": {
                 "reports": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ReportResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportResponse"
                     }
                 },
                 "task_id": {
@@ -8959,7 +10243,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ReportListResponse": {
+        "emplacc-api_internal_dto_response.ReportListResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -8971,7 +10255,7 @@ const docTemplate = `{
                 "reports": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ReportResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ReportResponse"
                     }
                 },
                 "total_count": {
@@ -8979,7 +10263,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.ReportResponse": {
+        "emplacc-api_internal_dto_response.ReportResponse": {
             "type": "object",
             "properties": {
                 "checked": {
@@ -8988,7 +10272,7 @@ const docTemplate = `{
                 "completed_work": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.CompletedWork"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.CompletedWork"
                     }
                 },
                 "created_at": {
@@ -8997,7 +10281,7 @@ const docTemplate = `{
                 "help_requests": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.HelpRequestItem"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.HelpRequestItem"
                     }
                 },
                 "id": {
@@ -9006,13 +10290,13 @@ const docTemplate = `{
                 "plan_tomorrow": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TomorrowPlans"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TomorrowPlans"
                     }
                 },
                 "problem": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.ProblemResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.ProblemResponse"
                     }
                 },
                 "report_date": {
@@ -9025,11 +10309,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_info": {
-                    "$ref": "#/definitions/response.UserShort"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                 }
             }
         },
-        "response.ReportUniversalResponse": {
+        "emplacc-api_internal_dto_response.ReportUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9040,7 +10324,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.RoleUniversalResponse": {
+        "emplacc-api_internal_dto_response.RoleUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9051,7 +10335,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.StatusByBoardIdResponse": {
+        "emplacc-api_internal_dto_response.StatusByBoardIdResponse": {
             "type": "object",
             "properties": {
                 "board_id": {
@@ -9060,16 +10344,16 @@ const docTemplate = `{
                 "statuses": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.StatusResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusResponse"
                     }
                 }
             }
         },
-        "response.StatusFull": {
+        "emplacc-api_internal_dto_response.StatusFull": {
             "type": "object",
             "properties": {
                 "board": {
-                    "$ref": "#/definitions/response.BoardRef"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.BoardRef"
                 },
                 "color": {
                     "type": "string"
@@ -9088,7 +10372,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.StatusListResponse": {
+        "emplacc-api_internal_dto_response.StatusListResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9100,7 +10384,7 @@ const docTemplate = `{
                 "statuses": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.StatusShort"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusShort"
                     }
                 },
                 "total_count": {
@@ -9108,7 +10392,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.StatusResponse": {
+        "emplacc-api_internal_dto_response.StatusResponse": {
             "type": "object",
             "properties": {
                 "color": {
@@ -9141,7 +10425,7 @@ const docTemplate = `{
                 "tasks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TaskShort"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskShort"
                     }
                 },
                 "updated_at": {
@@ -9149,7 +10433,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.StatusShort": {
+        "emplacc-api_internal_dto_response.StatusShort": {
             "type": "object",
             "properties": {
                 "color": {
@@ -9184,7 +10468,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.StatusUniversalResponse": {
+        "emplacc-api_internal_dto_response.StatusUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9195,7 +10479,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.SubscriptionListBySubObjectResponse": {
+        "emplacc-api_internal_dto_response.SubscriptionListBySubObjectResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9210,7 +10494,7 @@ const docTemplate = `{
                 "subscriptions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.SubscriptionResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse"
                     }
                 },
                 "total_count": {
@@ -9221,7 +10505,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.SubscriptionListByUserIdResponse": {
+        "emplacc-api_internal_dto_response.SubscriptionListByUserIdResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9233,7 +10517,7 @@ const docTemplate = `{
                 "subscriptions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.SubscriptionResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse"
                     }
                 },
                 "total_count": {
@@ -9244,7 +10528,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.SubscriptionListResponse": {
+        "emplacc-api_internal_dto_response.SubscriptionListResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9256,7 +10540,7 @@ const docTemplate = `{
                 "subscriptions": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.SubscriptionResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse"
                     }
                 },
                 "total_count": {
@@ -9264,7 +10548,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.SubscriptionResponse": {
+        "emplacc-api_internal_dto_response.SubscriptionResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -9284,7 +10568,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.SubscriptionUniversalResponse": {
+        "emplacc-api_internal_dto_response.SubscriptionUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9295,11 +10579,11 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskForReport": {
+        "emplacc-api_internal_dto_response.TaskForReport": {
             "type": "object",
             "properties": {
                 "board": {
-                    "$ref": "#/definitions/response.InTaskBoard"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.InTaskBoard"
                 },
                 "description": {
                     "type": "string"
@@ -9311,15 +10595,15 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "project": {
-                    "$ref": "#/definitions/response.InTaskProject"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.InTaskProject"
                 }
             }
         },
-        "response.TaskFull": {
+        "emplacc-api_internal_dto_response.TaskFull": {
             "type": "object",
             "properties": {
                 "assigned_to_user": {
-                    "$ref": "#/definitions/response.UserFull"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserFull"
                 },
                 "category": {
                     "type": "integer"
@@ -9328,7 +10612,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "created_by_user": {
-                    "$ref": "#/definitions/response.UserFull"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserFull"
                 },
                 "deadline": {
                     "type": "string"
@@ -9355,7 +10639,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "status": {
-                    "$ref": "#/definitions/response.StatusFull"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.StatusFull"
                 },
                 "time_spent": {
                     "type": "string"
@@ -9365,7 +10649,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskListResponse": {
+        "emplacc-api_internal_dto_response.TaskListResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9377,7 +10661,7 @@ const docTemplate = `{
                 "tasks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TaskShort"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskShort"
                     }
                 },
                 "total_count": {
@@ -9385,7 +10669,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskProjectInfo": {
+        "emplacc-api_internal_dto_response.TaskProjectInfo": {
             "type": "object",
             "properties": {
                 "description": {
@@ -9399,17 +10683,17 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskSearchItem": {
+        "emplacc-api_internal_dto_response.TaskSearchItem": {
             "type": "object",
             "properties": {
                 "assigned_to": {
-                    "$ref": "#/definitions/response.UserShort"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "created_by": {
-                    "$ref": "#/definitions/response.UserShort"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserShort"
                 },
                 "deadline": {
                     "type": "string"
@@ -9427,20 +10711,20 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "project": {
-                    "$ref": "#/definitions/response.TaskProjectInfo"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskProjectInfo"
                 },
                 "start_date": {
                     "type": "string"
                 },
                 "status": {
-                    "$ref": "#/definitions/response.TaskStatusInfo"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskStatusInfo"
                 },
                 "updated_at": {
                     "type": "string"
                 }
             }
         },
-        "response.TaskSearchResponse": {
+        "emplacc-api_internal_dto_response.TaskSearchResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9455,7 +10739,7 @@ const docTemplate = `{
                 "tasks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TaskSearchItem"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskSearchItem"
                     }
                 },
                 "totalCount": {
@@ -9463,7 +10747,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskShort": {
+        "emplacc-api_internal_dto_response.TaskShort": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -9492,7 +10776,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskStatusInfo": {
+        "emplacc-api_internal_dto_response.TaskStatusInfo": {
             "type": "object",
             "properties": {
                 "color": {
@@ -9509,7 +10793,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TaskUniversaResponse": {
+        "emplacc-api_internal_dto_response.TaskUniversaResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9520,9 +10804,12 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TeamMemberResponse": {
+        "emplacc-api_internal_dto_response.TeamMemberResponse": {
             "type": "object",
             "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -9540,7 +10827,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TeamResponse": {
+        "emplacc-api_internal_dto_response.TeamResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -9555,7 +10842,7 @@ const docTemplate = `{
                 "members": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TeamMemberResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamMemberResponse"
                     }
                 },
                 "name": {
@@ -9566,7 +10853,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TeamUniversalProjectResponse": {
+        "emplacc-api_internal_dto_response.TeamUniversalProjectResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -9580,7 +10867,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TeamUniversalResponse": {
+        "emplacc-api_internal_dto_response.TeamUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9591,7 +10878,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TeamUniversalUserResponse": {
+        "emplacc-api_internal_dto_response.TeamUniversalUserResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -9605,27 +10892,30 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TeamsListResponse": {
+        "emplacc-api_internal_dto_response.TeamsListResponse": {
             "type": "object",
             "properties": {
                 "teams": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TeamResponse"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TeamResponse"
                     }
                 }
             }
         },
-        "response.TokenValidationResponse": {
+        "emplacc-api_internal_dto_response.TokenValidationResponse": {
             "type": "object",
             "properties": {
                 "message": {
                     "description": "\"Token is valid\" или описание ошибки",
                     "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
                 }
             }
         },
-        "response.TomorrowPlans": {
+        "emplacc-api_internal_dto_response.TomorrowPlans": {
             "type": "object",
             "properties": {
                 "description": {
@@ -9639,7 +10929,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.TomorrowPlansWithTask": {
+        "emplacc-api_internal_dto_response.TomorrowPlansWithTask": {
             "type": "object",
             "properties": {
                 "description": {
@@ -9649,11 +10939,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "task": {
-                    "$ref": "#/definitions/response.TaskForReport"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskForReport"
                 }
             }
         },
-        "response.UserFull": {
+        "emplacc-api_internal_dto_response.UserFull": {
             "type": "object",
             "properties": {
                 "email": {
@@ -9670,7 +10960,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserInfo": {
+        "emplacc-api_internal_dto_response.UserInfo": {
             "description": "Структура с информацией о пользователе из Keycloak",
             "type": "object",
             "properties": {
@@ -9704,7 +10994,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserProjectTasksResponse": {
+        "emplacc-api_internal_dto_response.UserProjectTasksResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9714,25 +11004,28 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "project": {
-                    "$ref": "#/definitions/response.ProjectShort"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.ProjectShort"
                 },
                 "tasks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TaskFull"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskFull"
                     }
                 },
                 "total_count": {
                     "type": "integer"
                 },
                 "user": {
-                    "$ref": "#/definitions/response.UserFull"
+                    "$ref": "#/definitions/emplacc-api_internal_dto_response.UserFull"
                 }
             }
         },
-        "response.UserShort": {
+        "emplacc-api_internal_dto_response.UserShort": {
             "type": "object",
             "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
                 "first_name": {
                     "type": "string"
                 },
@@ -9744,7 +11037,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserTasksResponse": {
+        "emplacc-api_internal_dto_response.UserTasksResponse": {
             "type": "object",
             "properties": {
                 "page": {
@@ -9756,7 +11049,7 @@ const docTemplate = `{
                 "tasks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/response.TaskFull"
+                        "$ref": "#/definitions/emplacc-api_internal_dto_response.TaskFull"
                     }
                 },
                 "total_count": {
@@ -9764,7 +11057,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserUniversalResponse": {
+        "emplacc-api_internal_dto_response.UserUniversalResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -9772,6 +11065,398 @@ const docTemplate = `{
                 },
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "emplacc-api_internal_service.ConveyorMutationResult": {
+            "type": "object",
+            "properties": {
+                "entity_id": {
+                    "type": "string"
+                },
+                "event_id": {
+                    "type": "string"
+                },
+                "replayed": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "emplacc-api_internal_service.PMImportCounter": {
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "integer"
+                },
+                "reused": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "emplacc-api_internal_service.PMImportSummary": {
+            "type": "object",
+            "properties": {
+                "criteria": {
+                    "$ref": "#/definitions/emplacc-api_internal_service.PMImportCounter"
+                },
+                "dry_run": {
+                    "type": "boolean"
+                },
+                "events": {
+                    "$ref": "#/definitions/emplacc-api_internal_service.PMImportCounter"
+                },
+                "evidence": {
+                    "$ref": "#/definitions/emplacc-api_internal_service.PMImportCounter"
+                },
+                "links": {
+                    "$ref": "#/definitions/emplacc-api_internal_service.PMImportCounter"
+                },
+                "status_facts": {
+                    "$ref": "#/definitions/emplacc-api_internal_service.PMImportCounter"
+                },
+                "switch_over_accepted": {
+                    "type": "boolean"
+                },
+                "tickets": {
+                    "$ref": "#/definitions/emplacc-api_internal_service.PMImportCounter"
+                }
+            }
+        },
+        "internal_controller.conveyorAgentRunRequest": {
+            "type": "object",
+            "properties": {
+                "harness": {
+                    "type": "string",
+                    "example": "external-harness"
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "agent-run-register-1"
+                },
+                "log_uri": {
+                    "type": "string",
+                    "example": "https://example.test/log"
+                },
+                "metadata": {
+                    "type": "object"
+                },
+                "source": {
+                    "type": "string",
+                    "example": "rest"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "queued"
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "Run queued"
+                },
+                "workspace_uri": {
+                    "type": "string",
+                    "example": "file:///workspace"
+                }
+            }
+        },
+        "internal_controller.conveyorAgentRunUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "agent-run-update-1"
+                },
+                "log_uri": {
+                    "type": "string",
+                    "example": "https://example.test/log"
+                },
+                "metadata": {
+                    "type": "object"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "running"
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "Run started"
+                },
+                "workspace_uri": {
+                    "type": "string",
+                    "example": "file:///workspace"
+                }
+            }
+        },
+        "internal_controller.conveyorApprovalDecisionRequest": {
+            "type": "object",
+            "properties": {
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "approval-decide-1"
+                },
+                "reason": {
+                    "type": "string",
+                    "example": "approved by owner"
+                }
+            }
+        },
+        "internal_controller.conveyorApprovalRequest": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "example": "production_deploy"
+                },
+                "expires_at": {
+                    "type": "string",
+                    "example": ""
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "approval-request-1"
+                },
+                "reason": {
+                    "type": "string",
+                    "example": "deploy product-a to staging"
+                },
+                "resource": {
+                    "type": "object"
+                },
+                "risk_level": {
+                    "type": "string",
+                    "example": "high"
+                },
+                "work_item_id": {
+                    "type": "string",
+                    "example": ""
+                }
+            }
+        },
+        "internal_controller.conveyorCloseTaskRequest": {
+            "type": "object",
+            "properties": {
+                "allow_dependency_auto_ready": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "approval_granted": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "approval_token": {
+                    "type": "string",
+                    "example": "approval-1"
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "task-close-1"
+                },
+                "risk_level": {
+                    "type": "string",
+                    "example": "medium"
+                },
+                "task_waiver_id": {
+                    "type": "string",
+                    "example": ""
+                },
+                "to_status_id": {
+                    "type": "string",
+                    "example": "9a888cc9-0e34-4f3e-8d9d-4924d9e35687"
+                }
+            }
+        },
+        "internal_controller.conveyorCriterionRequest": {
+            "type": "object",
+            "properties": {
+                "ac_id": {
+                    "type": "string",
+                    "example": "AC-1"
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "criterion-create-1"
+                },
+                "required": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "spec_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "SPEC-1",
+                        "SPEC-2"
+                    ]
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Run targeted backend tests"
+                }
+            }
+        },
+        "internal_controller.conveyorCriterionStateRequest": {
+            "type": "object",
+            "properties": {
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "criterion-update-1"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "passed"
+                }
+            }
+        },
+        "internal_controller.conveyorErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "validation_error"
+                }
+            }
+        },
+        "internal_controller.conveyorEvidenceRequest": {
+            "type": "object",
+            "properties": {
+                "approval_granted": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "approval_token": {
+                    "type": "string",
+                    "example": "approval-1"
+                },
+                "criterion_id": {
+                    "type": "string",
+                    "example": ""
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "evidence-attach-1"
+                },
+                "metadata": {
+                    "type": "object"
+                },
+                "sha256": {
+                    "type": "string",
+                    "example": ""
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test evidence"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "link"
+                },
+                "uri": {
+                    "type": "string",
+                    "example": "https://example.test/evidence"
+                },
+                "verdict": {
+                    "type": "string",
+                    "example": "supports"
+                }
+            }
+        },
+        "internal_controller.conveyorLLMTextResponse": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "type": "string",
+                    "example": "draft text"
+                }
+            }
+        },
+        "internal_controller.conveyorPMImportRequest": {
+            "type": "object",
+            "properties": {
+                "approval_granted": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "approval_token": {
+                    "type": "string",
+                    "example": "approval-1"
+                },
+                "dry_run": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "pm-import-1"
+                },
+                "scope": {
+                    "type": "string",
+                    "example": "default"
+                },
+                "status_by_pm_state": {
+                    "type": "object"
+                }
+            }
+        },
+        "internal_controller.conveyorRevokeEvidenceRequest": {
+            "type": "object",
+            "properties": {
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "evidence-revoke-1"
+                },
+                "reason": {
+                    "type": "string",
+                    "example": "superseded"
+                }
+            }
+        },
+        "internal_controller.conveyorTaskLinkRequest": {
+            "type": "object",
+            "properties": {
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "task-link-1"
+                },
+                "link_type": {
+                    "type": "string",
+                    "example": "relates_to"
+                },
+                "target_task_id": {
+                    "type": "string",
+                    "example": "9a888cc9-0e34-4f3e-8d9d-4924d9e35687"
+                }
+            }
+        },
+        "internal_controller.conveyorWaiverRequest": {
+            "type": "object",
+            "properties": {
+                "approval_request_id": {
+                    "type": "string",
+                    "example": ""
+                },
+                "criterion_id": {
+                    "type": "string",
+                    "example": ""
+                },
+                "expires_at": {
+                    "type": "string",
+                    "example": ""
+                },
+                "idempotency_key": {
+                    "type": "string",
+                    "example": "waiver-create-1"
+                },
+                "reason": {
+                    "type": "string",
+                    "example": "deferred to follow-up ticket"
+                },
+                "scope": {
+                    "type": "string",
+                    "example": "task"
                 }
             }
         }
@@ -9795,6 +11480,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "API для Emplacc.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
+	LeftDelim:        "{{",
+	RightDelim:       "}}",
 }
 
 func init() {

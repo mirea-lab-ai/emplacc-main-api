@@ -4,7 +4,7 @@ import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
 	"emplacc-api/internal/dto/response"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"emplacc-api/internal/utils"
 	"errors"
 	"sort"
@@ -33,10 +33,10 @@ type ReportService interface {
 }
 
 type reportService struct {
-	repo repository.ReportRepository
+	repo ports.ReportRepository
 }
 
-func NewReportService(repo repository.ReportRepository) ReportService {
+func NewReportService(repo ports.ReportRepository) ReportService {
 	return &reportService{
 		repo: repo,
 	}
@@ -48,46 +48,46 @@ func (s *reportService) GetAllReports(page, pageSize int) ([]models.DailyReport,
 }
 
 func (s *reportService) GetReportByDateInXLSX(req request.ReportsByDateInXLSX) (*response.XLSXReportData, error) {
-    reports, err := s.repo.GetReportByDateInXLSX(req.StartDate, req.EndDate)
-    if err != nil {
-        return nil, err
-    }
+	reports, err := s.repo.GetReportByDateInXLSX(req.StartDate, req.EndDate)
+	if err != nil {
+		return nil, err
+	}
 
-    // 1. Все даты в диапазоне
-    var dates []time.Time
-    current := req.StartDate
-    for !current.After(req.EndDate) {
-        dates = append(dates, current.Truncate(24*time.Hour))
-        current = current.AddDate(0, 0, 1)
-    }
+	// 1. Все даты в диапазоне
+	var dates []time.Time
+	current := req.StartDate
+	for !current.After(req.EndDate) {
+		dates = append(dates, current.Truncate(24*time.Hour))
+		current = current.AddDate(0, 0, 1)
+	}
 
-    // 2. Группировка
-    userMap := make(map[string]map[time.Time][]string)
-    userOrder := []string{}
+	// 2. Группировка
+	userMap := make(map[string]map[time.Time][]string)
+	userOrder := []string{}
 
-    for _, report := range reports {
-        if report.User == nil || report.ReportDate == nil {
-            continue
-        }
+	for _, report := range reports {
+		if report.User == nil || report.ReportDate == nil {
+			continue
+		}
 
-        firstName := report.User.FirstName
-        lastName := report.User.LastName
-        userName := strings.TrimSpace(firstName + " " + lastName)
-        if userName == "" {
-            userName = report.User.Email
-        }
-        if userName == "" {
-            userName = report.User.ID.String()
-        }
+		firstName := report.User.FirstName
+		lastName := report.User.LastName
+		userName := strings.TrimSpace(firstName + " " + lastName)
+		if userName == "" {
+			userName = report.User.Email
+		}
+		if userName == "" {
+			userName = report.User.ID.String()
+		}
 
-        if _, exists := userMap[userName]; !exists {
-            userMap[userName] = make(map[time.Time][]string)
-            userOrder = append(userOrder, userName)
-        }
+		if _, exists := userMap[userName]; !exists {
+			userMap[userName] = make(map[time.Time][]string)
+			userOrder = append(userOrder, userName)
+		}
 
-        reportDate := report.ReportDate.Truncate(24 * time.Hour)
+		reportDate := report.ReportDate.Truncate(24 * time.Hour)
 
-        for _, work := range report.CompletedWork {
+		for _, work := range report.CompletedWork {
 			isDeleted := work.Deleted != nil && *work.Deleted
 			if isDeleted {
 				continue
@@ -99,9 +99,9 @@ func (s *reportService) GetReportByDateInXLSX(req request.ReportsByDateInXLSX) (
 			// === Получаем название проекта ===
 			projectName := "Без проекта"
 			if work.Task != nil &&
-			work.Task.Status != nil &&
-			work.Task.Status.Board != nil &&
-			work.Task.Status.Board.Project != nil {
+				work.Task.Status != nil &&
+				work.Task.Status.Board != nil &&
+				work.Task.Status.Board.Project != nil {
 				if work.Task.Status.Board.Project.Name != nil && *work.Task.Status.Board.Project.Name != "" {
 					projectName = *work.Task.Status.Board.Project.Name
 				}
@@ -117,13 +117,13 @@ func (s *reportService) GetReportByDateInXLSX(req request.ReportsByDateInXLSX) (
 			workText := projectName + ": " + taskName + ": " + *work.Description
 			userMap[userName][reportDate] = append(userMap[userName][reportDate], workText)
 		}
-    }
+	}
 
-    return &response.XLSXReportData{
-        Users: userOrder,
-        Dates: dates,
-        Grid:  userMap,
-    }, nil
+	return &response.XLSXReportData{
+		Users: userOrder,
+		Dates: dates,
+		Grid:  userMap,
+	}, nil
 }
 
 func (s *reportService) GetAllReportsByUserId(userID uuid.UUID, page, pageSize int) ([]models.DailyReport, int64, error) {
@@ -144,91 +144,91 @@ func (s *reportService) GetReportsByProjectId(projectID uuid.UUID) ([]models.Dai
 }
 
 func (s *reportService) GetTomorrowPlansForXLSX() (*response.TomorrowPlansXLSXData, error) {
-    plans, err := s.repo.GetLatestTomorrowPlans()
-    if err != nil {
-        return nil, err
-    }
+	plans, err := s.repo.GetLatestTomorrowPlans()
+	if err != nil {
+		return nil, err
+	}
 
-    userPlansMap := make(map[uuid.UUID]*response.UserTomorrowPlans)
-    
-    for _, plan := range plans {
-        var userID uuid.UUID
-        var reportDate time.Time
-        var userName, userEmail string
-        
-        if plan.Report != nil {
-            userID = plan.Report.UserID
-            reportDate = utils.GetTime(plan.Report.ReportDate)
-            
-            if plan.Report.User != nil {
-                firstName := plan.Report.User.FirstName
-                lastName := plan.Report.User.LastName
-                if firstName != "" || lastName != "" {
-                    userName = strings.TrimSpace(firstName + " " + lastName)
-                } else {
-                    userName = plan.Report.User.Email
-                }
-                userEmail = plan.Report.User.Email
-            }
-        } else {
-            continue
-        }
+	userPlansMap := make(map[uuid.UUID]*response.UserTomorrowPlans)
 
-        if _, exists := userPlansMap[userID]; !exists {
-            userPlansMap[userID] = &response.UserTomorrowPlans{
-                UserID:     userID.String(),
-                UserName:   userName,
-                UserEmail:  userEmail,
-                ReportDate: reportDate,
-                Plans:      []response.TomorrowPlan{},
-            }
-        }
+	for _, plan := range plans {
+		var userID uuid.UUID
+		var reportDate time.Time
+		var userName, userEmail string
 
-        taskName := "Без задачи"
-        projectName := "Без проекта"
-        
-        if plan.Task != nil {
-            if plan.Task.Name != nil && *plan.Task.Name != "" {
-                taskName = *plan.Task.Name
-            }
-            
-            if plan.Task.Status != nil && 
-               plan.Task.Status.Board != nil && 
-               plan.Task.Status.Board.Project != nil {
-                if plan.Task.Status.Board.Project.Name != nil && *plan.Task.Status.Board.Project.Name != "" {
-                    projectName = *plan.Task.Status.Board.Project.Name
-                }
-            }
-        }
+		if plan.Report != nil {
+			userID = plan.Report.UserID
+			reportDate = utils.GetTime(plan.Report.ReportDate)
 
-        description := ""
-        if plan.Description != nil {
-            description = *plan.Description
-        }
+			if plan.Report.User != nil {
+				firstName := plan.Report.User.FirstName
+				lastName := plan.Report.User.LastName
+				if firstName != "" || lastName != "" {
+					userName = strings.TrimSpace(firstName + " " + lastName)
+				} else {
+					userName = plan.Report.User.Email
+				}
+				userEmail = plan.Report.User.Email
+			}
+		} else {
+			continue
+		}
 
-        tomorrowPlan := response.TomorrowPlan{
-            ID:          plan.ID.String(),
-            Description: description,
-            TaskName:    taskName,
-            ProjectName: projectName,
-            CreatedAt:   utils.GetTime(plan.CreatedAt),
-        }
+		if _, exists := userPlansMap[userID]; !exists {
+			userPlansMap[userID] = &response.UserTomorrowPlans{
+				UserID:     userID.String(),
+				UserName:   userName,
+				UserEmail:  userEmail,
+				ReportDate: reportDate,
+				Plans:      []response.TomorrowPlan{},
+			}
+		}
 
-        userPlansMap[userID].Plans = append(userPlansMap[userID].Plans, tomorrowPlan)
-    }
+		taskName := "Без задачи"
+		projectName := "Без проекта"
 
-    users := make([]response.UserTomorrowPlans, 0, len(userPlansMap))
-    for _, userPlans := range userPlansMap {
-        users = append(users, *userPlans)
-    }
+		if plan.Task != nil {
+			if plan.Task.Name != nil && *plan.Task.Name != "" {
+				taskName = *plan.Task.Name
+			}
 
-    sort.Slice(users, func(i, j int) bool {
-        return users[i].UserName < users[j].UserName
-    })
+			if plan.Task.Status != nil &&
+				plan.Task.Status.Board != nil &&
+				plan.Task.Status.Board.Project != nil {
+				if plan.Task.Status.Board.Project.Name != nil && *plan.Task.Status.Board.Project.Name != "" {
+					projectName = *plan.Task.Status.Board.Project.Name
+				}
+			}
+		}
 
-    return &response.TomorrowPlansXLSXData{
-        Users: users,
-    }, nil
+		description := ""
+		if plan.Description != nil {
+			description = *plan.Description
+		}
+
+		tomorrowPlan := response.TomorrowPlan{
+			ID:          plan.ID.String(),
+			Description: description,
+			TaskName:    taskName,
+			ProjectName: projectName,
+			CreatedAt:   utils.GetTime(plan.CreatedAt),
+		}
+
+		userPlansMap[userID].Plans = append(userPlansMap[userID].Plans, tomorrowPlan)
+	}
+
+	users := make([]response.UserTomorrowPlans, 0, len(userPlansMap))
+	for _, userPlans := range userPlansMap {
+		users = append(users, *userPlans)
+	}
+
+	sort.Slice(users, func(i, j int) bool {
+		return users[i].UserName < users[j].UserName
+	})
+
+	return &response.TomorrowPlansXLSXData{
+		Users: users,
+	}, nil
 }
 
 func (s *reportService) CreateReport(req request.ReportCreateRequest) (uuid.UUID, error) {
@@ -267,7 +267,7 @@ func (s *reportService) UpdateReport(reportID uuid.UUID, req request.ReportRepla
 	}
 
 	now := time.Now()
-	if err := s.repo.Transaction(func(tx repository.ReportRepository) error {
+	if err := s.repo.Transaction(func(tx ports.ReportRepository) error {
 		updateData := map[string]interface{}{"updated_at": &now}
 		if req.UserId != "" {
 			if uid, err := uuid.Parse(req.UserId); err == nil {

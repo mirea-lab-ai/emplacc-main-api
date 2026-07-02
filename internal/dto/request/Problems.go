@@ -12,6 +12,7 @@ type ProblemListByUserId struct {
 }
 
 type ProblemUpdateRequest struct {
+	Name        *string   `json:"name"`
 	Description *[]string `json:"description"`
 }
 

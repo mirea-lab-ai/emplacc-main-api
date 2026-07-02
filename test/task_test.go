@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 	"time"
 
@@ -16,31 +17,32 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"emplacc-api/internal/controller"
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
 	"emplacc-api/internal/dto/response"
 	"emplacc-api/internal/grpc/client"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/repository/postgres"
 	"emplacc-api/internal/service"
+	httpapi "emplacc-api/internal/transport/http"
 )
 
 func TestTask_FullCRUD(t *testing.T) {
 	testDB := setupTestDB(t)
 
 	// Создаем зависимости для новой архитектуры
-	taskRepo := repository.NewTaskRepository(testDB)
-	taskService := service.NewTaskService(taskRepo)
-	userRepo := repository.NewUserRepository(testDB)
+	taskRepo := postgres.NewTaskRepository(testDB)
+	taskService := service.NewTaskService(taskRepo, nil)
+	userRepo := postgres.NewUserRepository(testDB)
 	userService := service.NewUserService(userRepo)
-	projectRepo := repository.NewProjectRepository(testDB)
+	projectRepo := postgres.NewProjectRepository(testDB)
 	projectService := service.NewProjectService(projectRepo)
-	llmClient, err := client.NewLLMClient("grpc-service:50051") // используем docker service name
+	llmClient, err := client.NewLLMClient("grpc-service:50051", os.Getenv("LLM_GRPC_AUTH_TOKEN")) // используем docker service name
 	if err != nil {
 		log.Fatalf("Failed to create gRPC client: %v", err)
 	}
 	defer llmClient.Close()
-	taskController := controller.NewTaskController(taskService, userService, projectService, llmClient)
+	llmSettingsService := service.NewLLMSettingsService(postgres.NewLLMSettingsRepository(testDB))
+	taskController := httpapi.NewTaskController(taskService, userService, projectService, llmClient, llmSettingsService, testFreshAvatarURL)
 
 	e := echo.New()
 
@@ -66,15 +68,15 @@ func TestTask_FullCRUD(t *testing.T) {
 		statusId := statusID.String() // ← обязательно
 
 		reqBody := request.TaskCreateRequest{
-			StatusID:      statusId,    // ← вместо ProjectID
-			Name:          &name,
-			Description:   &description,
-			Priority:      &priority,
-			CreatorID:     &creatorId,
-			AssignedTo:    &userId,
-			StartDate:     &startDate,
-			Deadline:      &deadline,
-			Category:      &category,
+			StatusID:    statusId,
+			Name:        &name,
+			Description: &description,
+			Priority:    &priority,
+			CreatorID:   &creatorId,
+			AssignedTo:  &userId,
+			StartDate:   &startDate,
+			Deadline:    &deadline,
+			Category:    &category,
 		}
 
 		body, _ := json.Marshal(reqBody)
@@ -121,33 +123,33 @@ func TestTask_FullCRUD(t *testing.T) {
 	})
 
 	/*
-	// === 3. GetTasksByProjectID ===
-	t.Run("getTasksByProjectId", func(t *testing.T) {
-		req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/task/project/%s/1/10", projectID), nil)
-		rec := httptest.NewRecorder()
-		c := e.NewContext(req, rec)
-		c.SetParamNames("projectId", "page", "pagesize")
-		c.SetParamValues(projectID.String(), "1", "10")
+		// === 3. GetTasksByProjectID ===
+		t.Run("getTasksByProjectId", func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/task/project/%s/1/10", projectID), nil)
+			rec := httptest.NewRecorder()
+			c := e.NewContext(req, rec)
+			c.SetParamNames("projectId", "page", "pagesize")
+			c.SetParamValues(projectID.String(), "1", "10")
 
-		err := taskController.GetTasksByProjectID(c)
-		assert.NoError(t, err)
-		assert.Equal(t, http.StatusOK, rec.Code)
+			err := taskController.GetTasksByProjectID(c)
+			assert.NoError(t, err)
+			assert.Equal(t, http.StatusOK, rec.Code)
 
-		var resp map[string]interface{}
-		require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &resp))
-		assert.Equal(t, float64(1), resp["page"])
-		assert.Equal(t, float64(10), resp["page_size"])
+			var resp map[string]interface{}
+			require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &resp))
+			assert.Equal(t, float64(1), resp["page"])
+			assert.Equal(t, float64(10), resp["page_size"])
 
-		tasks, ok := resp["tasks"].([]interface{})
-		assert.True(t, ok)
-		assert.Greater(t, len(tasks), 0)
+			tasks, ok := resp["tasks"].([]interface{})
+			assert.True(t, ok)
+			assert.Greater(t, len(tasks), 0)
 
-		// Проверим, что задача содержит status_id, но не project_id
-		firstTask := tasks[0].(map[string]interface{})
-		assert.Equal(t, taskID.String(), firstTask["id"])
-		assert.Equal(t, statusID.String(), firstTask["status_id"])
-		assert.NotContains(t, firstTask, "project_id") // ← убедись, что его нет
-	})
+			// Verify that the task contains status_id and not project_id.
+			firstTask := tasks[0].(map[string]interface{})
+			assert.Equal(t, taskID.String(), firstTask["id"])
+			assert.Equal(t, statusID.String(), firstTask["status_id"])
+			assert.NotContains(t, firstTask, "project_id")
+		})
 	*/
 
 	// === 4. GetTasksByUserId ===
@@ -173,7 +175,8 @@ func TestTask_FullCRUD(t *testing.T) {
 
 		firstTask := tasks[0].(map[string]interface{})
 		assert.Equal(t, taskID.String(), firstTask["id"])
-		assert.Equal(t, statusID.String(), firstTask["status_id"])
+		status := firstTask["status"].(map[string]interface{})
+		assert.Equal(t, statusID.String(), status["id"])
 		assert.NotContains(t, firstTask, "project_id")
 	})
 

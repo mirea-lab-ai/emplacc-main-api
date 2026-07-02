@@ -17,11 +17,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 
-	"emplacc-api/internal/controller"
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/repository/postgres"
 	"emplacc-api/internal/service"
+	httpapi "emplacc-api/internal/transport/http"
 )
 
 // createTestRole создаёт тестовую роль
@@ -46,9 +46,9 @@ func TestCreateUser_10Users(t *testing.T) {
 	testDB := setupTestDB(t)
 
 	// Создаем зависимости для новой архитектуры
-	userRepo := repository.NewUserRepository(testDB)
+	userRepo := postgres.NewUserRepository(testDB)
 	userService := service.NewUserService(userRepo)
-	userController := controller.NewUserController(userService)
+	userController := httpapi.NewUserController(userService, testFreshAvatarURL)
 
 	e := echo.New()
 
@@ -114,9 +114,9 @@ func TestUser_FullCRUD(t *testing.T) {
 	testDB := setupTestDB(t)
 
 	// Создаем зависимости для новой архитектуры
-	userRepo := repository.NewUserRepository(testDB)
+	userRepo := postgres.NewUserRepository(testDB)
 	userService := service.NewUserService(userRepo)
-	userController := controller.NewUserController(userService)
+	userController := httpapi.NewUserController(userService, testFreshAvatarURL)
 
 	e := echo.New()
 
@@ -215,7 +215,7 @@ func TestUser_FullCRUD(t *testing.T) {
 		require.NoError(t, testDB.First(&updated, "id = ?", userID).Error)
 		assert.Equal(t, newEmail, updated.Email)
 		assert.Equal(t, newFirstName, updated.FirstName)
-		
+
 		// Обновляем текущий email
 		currentEmail = newEmail
 	})

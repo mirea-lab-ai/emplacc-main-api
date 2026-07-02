@@ -3,8 +3,8 @@ package request
 type CreateProjectRequest struct {
 	Name              *string `json:"name" validate:"required,min=3,max=100"`
 	Description       *string `json:"description" validate:"max=500"`
-	Gitlab_project_id *int    `json:"gitlab_project_id" validate:"required"`
-	Gitlab_url        *string `json:"gitlab_url" validate:"required"`
+	Gitlab_project_id *int    `json:"gitlab_project_id" validate:"omitempty"`
+	Gitlab_url        *string `json:"gitlab_url" validate:"omitempty,max=255"`
 	CreatedBy         *string `json:"created_by" validate:"required"`
 	Status            *string `json:"status" validate:"max=50"`
 }

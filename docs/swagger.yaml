@@ -1,6 +1,223 @@
 basePath: /
 definitions:
-  request.AddRoleUserRequest:
+  emplacc-api_internal_domain.AcceptanceCriterion:
+    properties:
+      ac_id:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      id:
+        type: string
+      required:
+        type: boolean
+      spec_ids:
+        items:
+          type: integer
+        type: array
+      state:
+        type: string
+      task_id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  emplacc-api_internal_domain.AgentRun:
+    properties:
+      actor_type:
+        type: string
+      agent_id:
+        type: string
+      api_token_id:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      finished_at:
+        type: string
+      harness:
+        type: string
+      heartbeat_at:
+        type: string
+      id:
+        type: string
+      log_uri:
+        type: string
+      metadata:
+        items:
+          type: integer
+        type: array
+      on_behalf_of_user_id:
+        type: string
+      source:
+        type: string
+      started_at:
+        type: string
+      status:
+        type: string
+      summary:
+        type: string
+      updated_at:
+        type: string
+      work_item_id:
+        type: string
+      workspace_uri:
+        type: string
+    type: object
+  emplacc-api_internal_domain.ApprovalRequest:
+    properties:
+      action:
+        type: string
+      actor_type:
+        type: string
+      agent_id:
+        type: string
+      api_token_id:
+        type: string
+      created_at:
+        type: string
+      decided_at:
+        type: string
+      decided_by:
+        type: string
+      decision_reason:
+        type: string
+      expires_at:
+        type: string
+      id:
+        type: string
+      on_behalf_of_user_id:
+        type: string
+      reason:
+        type: string
+      requested_by:
+        type: string
+      resource:
+        items:
+          type: integer
+        type: array
+      risk_level:
+        type: string
+      status:
+        type: string
+      work_item_id:
+        type: string
+    type: object
+  emplacc-api_internal_domain.ConveyorEvent:
+    properties:
+      actor_id:
+        type: string
+      actor_type:
+        type: string
+      agent_id:
+        type: string
+      api_token_id:
+        type: string
+      causation_id:
+        type: string
+      correlation_id:
+        type: string
+      id:
+        type: string
+      idempotency_key:
+        type: string
+      on_behalf_of_user_id:
+        type: string
+      payload:
+        items:
+          type: integer
+        type: array
+      request_id:
+        type: string
+      schema_version:
+        type: integer
+      source:
+        type: string
+      timestamp:
+        type: string
+      type:
+        type: string
+      work_item_id:
+        type: string
+    type: object
+  emplacc-api_internal_domain.Evidence:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: string
+      criterion_id:
+        type: string
+      id:
+        type: string
+      metadata:
+        items:
+          type: integer
+        type: array
+      revoked:
+        type: boolean
+      revoked_at:
+        type: string
+      revoked_by:
+        type: string
+      revoked_reason:
+        type: string
+      sha256:
+        type: string
+      task_id:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      uri:
+        type: string
+      verdict:
+        type: string
+    type: object
+  emplacc-api_internal_domain.TaskLink:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: string
+      id:
+        type: string
+      link_type:
+        type: string
+      source_task_id:
+        type: string
+      target_task_id:
+        type: string
+    type: object
+  emplacc-api_internal_domain.Waiver:
+    properties:
+      approval_request_id:
+        type: string
+      approved_by:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      criterion_id:
+        type: string
+      expires_at:
+        type: string
+      id:
+        type: string
+      reason:
+        type: string
+      scope:
+        type: string
+      work_item_id:
+        type: string
+    type: object
+  emplacc-api_internal_dto_request.AddRoleUserRequest:
     properties:
       assigner_id:
         type: string
@@ -9,7 +226,7 @@ definitions:
       user_id:
         type: string
     type: object
-  request.AttendanceCreateRequest:
+  emplacc-api_internal_dto_request.AttendanceCreateRequest:
     properties:
       actual_start:
         type: string
@@ -32,7 +249,7 @@ definitions:
       workday_hours:
         type: integer
     type: object
-  request.AttendanceUpdateRequest:
+  emplacc-api_internal_dto_request.AttendanceUpdateRequest:
     properties:
       actual_start:
         type: string
@@ -53,7 +270,7 @@ definitions:
       workday_hours:
         type: integer
     type: object
-  request.BoardCreateRequest:
+  emplacc-api_internal_dto_request.BoardCreateRequest:
     properties:
       description:
         type: string
@@ -62,21 +279,21 @@ definitions:
       project_id:
         type: string
     type: object
-  request.BoardUpdateRequest:
+  emplacc-api_internal_dto_request.BoardUpdateRequest:
     properties:
       description:
         type: string
       name:
         type: string
     type: object
-  request.CompletedWorkCreateRequest:
+  emplacc-api_internal_dto_request.CompletedWorkCreateRequest:
     properties:
       description:
         type: string
       task_id:
         type: string
     type: object
-  request.CompletedWorkReplaceRequest:
+  emplacc-api_internal_dto_request.CompletedWorkReplaceRequest:
     properties:
       description:
         type: string
@@ -85,30 +302,14 @@ definitions:
       task_id:
         type: string
     type: object
-  request.CompletedWorkUpdateRequest:
+  emplacc-api_internal_dto_request.CompletedWorkUpdateRequest:
     properties:
       description:
         type: string
       task_id:
         type: string
     type: object
-  request.CreateForumMessageRequest:
-    properties:
-      creator_id:
-        type: string
-      description:
-        items:
-          type: string
-        maxItems: 255
-        type: array
-      problem_id:
-        type: string
-    required:
-    - creator_id
-    - description
-    - problem_id
-    type: object
-  request.CreateProjectRequest:
+  emplacc-api_internal_dto_request.CreateProjectRequest:
     properties:
       created_by:
         type: string
@@ -118,6 +319,7 @@ definitions:
       gitlab_project_id:
         type: integer
       gitlab_url:
+        maxLength: 255
         type: string
       name:
         maxLength: 100
@@ -128,11 +330,9 @@ definitions:
         type: string
     required:
     - created_by
-    - gitlab_project_id
-    - gitlab_url
     - name
     type: object
-  request.CreateStatusRequest:
+  emplacc-api_internal_dto_request.CreateStatusRequest:
     properties:
       board_id:
         type: string
@@ -152,7 +352,7 @@ definitions:
     - color
     - name
     type: object
-  request.HelpRequest:
+  emplacc-api_internal_dto_request.HelpRequest:
     properties:
       description:
         type: string
@@ -161,7 +361,7 @@ definitions:
       status:
         type: string
     type: object
-  request.HelpRequestReplaceRequest:
+  emplacc-api_internal_dto_request.HelpRequestReplaceRequest:
     properties:
       description:
         type: string
@@ -172,7 +372,7 @@ definitions:
       status:
         type: string
     type: object
-  request.HelpRequestUpdateRequest:
+  emplacc-api_internal_dto_request.HelpRequestUpdateRequest:
     properties:
       description:
         type: string
@@ -181,7 +381,7 @@ definitions:
       status:
         type: string
     type: object
-  request.ImproveReportRequest:
+  emplacc-api_internal_dto_request.ImproveReportRequest:
     properties:
       user_text:
         maxLength: 2000
@@ -190,7 +390,7 @@ definitions:
     required:
     - user_text
     type: object
-  request.LoginRequest:
+  emplacc-api_internal_dto_request.LoginRequest:
     properties:
       email:
         type: string
@@ -200,7 +400,7 @@ definitions:
     - email
     - password
     type: object
-  request.MoveTaskToAnotherStatus:
+  emplacc-api_internal_dto_request.MoveTaskToAnotherStatus:
     properties:
       status_id:
         type: string
@@ -210,7 +410,7 @@ definitions:
     - status_id
     - task_id
     type: object
-  request.ProblemCreateRequest:
+  emplacc-api_internal_dto_request.ProblemCreateRequest:
     properties:
       creator_id:
         type: string
@@ -221,40 +421,42 @@ definitions:
       name:
         type: string
     type: object
-  request.ProblemUpdateRequest:
+  emplacc-api_internal_dto_request.ProblemUpdateRequest:
     properties:
       description:
         items:
           type: string
         type: array
+      name:
+        type: string
     type: object
-  request.RefreshRequest:
+  emplacc-api_internal_dto_request.RefreshRequest:
     properties:
       refresh_token:
         type: string
     required:
     - refresh_token
     type: object
-  request.RemoveRoleUserRequest:
+  emplacc-api_internal_dto_request.RemoveRoleUserRequest:
     properties:
       role_id:
         type: string
       user_id:
         type: string
     type: object
-  request.ReportCreateRequest:
+  emplacc-api_internal_dto_request.ReportCreateRequest:
     properties:
       complete_work:
         items:
-          $ref: '#/definitions/request.CompletedWorkCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.CompletedWorkCreateRequest'
         type: array
       help:
         items:
-          $ref: '#/definitions/request.HelpRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.HelpRequest'
         type: array
       plan_tomorrow:
         items:
-          $ref: '#/definitions/request.TomorrowPlanCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TomorrowPlanCreateRequest'
         type: array
       problems:
         items:
@@ -265,21 +467,21 @@ definitions:
       user_id:
         type: string
     type: object
-  request.ReportReplaceRequest:
+  emplacc-api_internal_dto_request.ReportReplaceRequest:
     properties:
       checked:
         type: integer
       complete_work:
         items:
-          $ref: '#/definitions/request.CompletedWorkReplaceRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.CompletedWorkReplaceRequest'
         type: array
       help:
         items:
-          $ref: '#/definitions/request.HelpRequestReplaceRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.HelpRequestReplaceRequest'
         type: array
       plan_tomorrow:
         items:
-          $ref: '#/definitions/request.TomorrowPlanReplaceRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TomorrowPlanReplaceRequest'
         type: array
       problems:
         items:
@@ -290,33 +492,33 @@ definitions:
       user_id:
         type: string
     type: object
-  request.ReportsByDateInXLSX:
+  emplacc-api_internal_dto_request.ReportsByDateInXLSX:
     properties:
       end_date:
         type: string
       start_date:
         type: string
     type: object
-  request.RestoreUserRequest:
+  emplacc-api_internal_dto_request.RestoreUserRequest:
     properties:
       email:
         type: string
     type: object
-  request.RoleCreateRequest:
+  emplacc-api_internal_dto_request.RoleCreateRequest:
     properties:
       description:
         type: string
       name:
         type: string
     type: object
-  request.RoleUpdateRequest:
+  emplacc-api_internal_dto_request.RoleUpdateRequest:
     properties:
       description:
         type: string
       name:
         type: string
     type: object
-  request.SubscriptionCreateRequest:
+  emplacc-api_internal_dto_request.SubscriptionCreateRequest:
     properties:
       subscription_id:
         type: string
@@ -325,7 +527,7 @@ definitions:
       user_id:
         type: string
     type: object
-  request.TaskCreateRequest:
+  emplacc-api_internal_dto_request.TaskCreateRequest:
     properties:
       assigned_to:
         type: string
@@ -359,7 +561,7 @@ definitions:
     - start_date
     - status_id
     type: object
-  request.TaskUpdateRequest:
+  emplacc-api_internal_dto_request.TaskUpdateRequest:
     properties:
       assigned_to:
         type: string
@@ -383,14 +585,14 @@ definitions:
       start_date:
         type: string
     type: object
-  request.TeamAddProjectRequest:
+  emplacc-api_internal_dto_request.TeamAddProjectRequest:
     properties:
       project_id:
         type: string
       team_id:
         type: string
     type: object
-  request.TeamAddUsersRequest:
+  emplacc-api_internal_dto_request.TeamAddUsersRequest:
     properties:
       team_id:
         type: string
@@ -399,7 +601,7 @@ definitions:
           type: string
         type: array
     type: object
-  request.TeamCreateRequest:
+  emplacc-api_internal_dto_request.TeamCreateRequest:
     properties:
       description:
         type: string
@@ -412,21 +614,21 @@ definitions:
     required:
     - name
     type: object
-  request.TeamDeleteProjectRequest:
+  emplacc-api_internal_dto_request.TeamDeleteProjectRequest:
     properties:
       project_id:
         type: string
       team_id:
         type: string
     type: object
-  request.TeamDeleteUserRequest:
+  emplacc-api_internal_dto_request.TeamDeleteUserRequest:
     properties:
       team_id:
         type: string
       user_id:
         type: string
     type: object
-  request.TeamUpdateMemberRoleRequest:
+  emplacc-api_internal_dto_request.TeamUpdateMemberRoleRequest:
     properties:
       specialization:
         type: string
@@ -439,45 +641,33 @@ definitions:
     - team_id
     - user_id
     type: object
-  request.TeamUpdateRequest:
+  emplacc-api_internal_dto_request.TeamUpdateRequest:
     properties:
       description:
         type: string
       name:
         type: string
     type: object
-  request.TomorrowPlanCreateRequest:
+  emplacc-api_internal_dto_request.TomorrowPlanCreateRequest:
     properties:
       description:
         type: string
       task_id:
         type: string
     type: object
-  request.TomorrowPlanReplaceRequest:
+  emplacc-api_internal_dto_request.TomorrowPlanReplaceRequest:
     properties:
       description:
         type: string
       id:
         type: string
     type: object
-  request.TomorrowPlansUpdateRequest:
+  emplacc-api_internal_dto_request.TomorrowPlansUpdateRequest:
     properties:
       description:
         type: string
     type: object
-  request.UpdateForumMessageRequest:
-    properties:
-      creator_id:
-        type: string
-      description:
-        items:
-          type: string
-        maxItems: 255
-        type: array
-      problem_id:
-        type: string
-    type: object
-  request.UpdateProjectRequest:
+  emplacc-api_internal_dto_request.UpdateProjectRequest:
     properties:
       description:
         type: string
@@ -490,7 +680,7 @@ definitions:
       status:
         type: string
     type: object
-  request.UpdateStatusRequest:
+  emplacc-api_internal_dto_request.UpdateStatusRequest:
     properties:
       board_id:
         type: string
@@ -507,7 +697,7 @@ definitions:
       order:
         type: integer
     type: object
-  request.UpdateUserRequest:
+  emplacc-api_internal_dto_request.UpdateUserRequest:
     properties:
       email:
         type: string
@@ -528,7 +718,7 @@ definitions:
       tg_user_id:
         type: integer
     type: object
-  request.UserCreateRequest:
+  emplacc-api_internal_dto_request.UserCreateRequest:
     properties:
       email:
         type: string
@@ -547,7 +737,7 @@ definitions:
       tg_user_id:
         type: integer
     type: object
-  response.AddRoleUserResponse:
+  emplacc-api_internal_dto_response.AddRoleUserResponse:
     properties:
       message:
         type: string
@@ -556,7 +746,7 @@ definitions:
       user_id:
         type: string
     type: object
-  response.AttendanceResponse:
+  emplacc-api_internal_dto_response.AttendanceResponse:
     properties:
       actual_start:
         type: string
@@ -587,27 +777,27 @@ definitions:
       workday_hours:
         type: integer
     type: object
-  response.AttendanceUniversalResponse:
+  emplacc-api_internal_dto_response.AttendanceUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.AttendancesByUserId:
+  emplacc-api_internal_dto_response.AttendancesByUserId:
     properties:
       attendances:
         items:
-          $ref: '#/definitions/response.AttendanceResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.AttendanceResponse'
         type: array
       user_id:
         type: string
     type: object
-  response.AttendancesListResponse:
+  emplacc-api_internal_dto_response.AttendancesListResponse:
     properties:
       attendances:
         items:
-          $ref: '#/definitions/response.AttendanceResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.AttendanceResponse'
         type: array
       page:
         type: integer
@@ -616,7 +806,7 @@ definitions:
       total_count:
         type: integer
     type: object
-  response.AuthResponse:
+  emplacc-api_internal_dto_response.AuthResponse:
     properties:
       access_token:
         type: string
@@ -638,20 +828,20 @@ definitions:
       userId:
         type: string
     type: object
-  response.BoardForProjectResponse:
+  emplacc-api_internal_dto_response.BoardForProjectResponse:
     properties:
       boards:
         items:
-          $ref: '#/definitions/response.BoardResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.BoardResponse'
         type: array
       project_id:
         type: string
     type: object
-  response.BoardListResponse:
+  emplacc-api_internal_dto_response.BoardListResponse:
     properties:
       boards:
         items:
-          $ref: '#/definitions/response.BoardResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.BoardResponse'
         type: array
       page:
         type: integer
@@ -660,7 +850,7 @@ definitions:
       total_count:
         type: integer
     type: object
-  response.BoardRef:
+  emplacc-api_internal_dto_response.BoardRef:
     properties:
       id:
         type: string
@@ -669,7 +859,7 @@ definitions:
       project_id:
         type: string
     type: object
-  response.BoardResponse:
+  emplacc-api_internal_dto_response.BoardResponse:
     properties:
       created_at:
         type: string
@@ -683,19 +873,19 @@ definitions:
         type: string
       statuses:
         items:
-          $ref: '#/definitions/response.StatusResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.StatusResponse'
         type: array
       updated_at:
         type: string
     type: object
-  response.BoardUniversalResponse:
+  emplacc-api_internal_dto_response.BoardUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.CompletedWork:
+  emplacc-api_internal_dto_response.CompletedWork:
     properties:
       description:
         type: string
@@ -704,68 +894,16 @@ definitions:
       task_id:
         type: string
     type: object
-  response.CompletedWorkWithTask:
+  emplacc-api_internal_dto_response.CompletedWorkWithTask:
     properties:
       description:
         type: string
       id:
         type: string
       task:
-        $ref: '#/definitions/response.TaskForReport'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.TaskForReport'
     type: object
-  response.ForumMessageListByProblemIdResponse:
-    properties:
-      messages:
-        items:
-          $ref: '#/definitions/response.ForumMessageResponse'
-        type: array
-      page:
-        type: integer
-      page_size:
-        type: integer
-      problem_id:
-        type: string
-      total_count:
-        type: integer
-    type: object
-  response.ForumMessageListResponse:
-    properties:
-      messages:
-        items:
-          $ref: '#/definitions/response.ForumMessageResponse'
-        type: array
-      page:
-        type: integer
-      page_size:
-        type: integer
-      total_count:
-        type: integer
-    type: object
-  response.ForumMessageResponse:
-    properties:
-      created_at:
-        type: string
-      creator_id:
-        type: string
-      desctription:
-        items:
-          type: string
-        type: array
-      id:
-        type: string
-      problem_id:
-        type: string
-      updated_at:
-        type: string
-    type: object
-  response.ForumMessageUniversalResponse:
-    properties:
-      id:
-        type: string
-      message:
-        type: string
-    type: object
-  response.GetAllRolesResponse:
+  emplacc-api_internal_dto_response.GetAllRolesResponse:
     properties:
       page:
         type: integer
@@ -773,12 +911,12 @@ definitions:
         type: integer
       roles:
         items:
-          $ref: '#/definitions/response.GetRoleResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.GetRoleResponse'
         type: array
       total_count:
         type: integer
     type: object
-  response.GetAllUsersResponse:
+  emplacc-api_internal_dto_response.GetAllUsersResponse:
     properties:
       page:
         type: integer
@@ -788,17 +926,17 @@ definitions:
         type: integer
       users:
         items:
-          $ref: '#/definitions/response.GetUserResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.GetUserResponse'
         type: array
     type: object
-  response.GetRoleByUserId:
+  emplacc-api_internal_dto_response.GetRoleByUserId:
     properties:
       role:
-        $ref: '#/definitions/response.GetRoleResponse'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.GetRoleResponse'
       user_id:
         type: string
     type: object
-  response.GetRoleResponse:
+  emplacc-api_internal_dto_response.GetRoleResponse:
     properties:
       created_at:
         type: string
@@ -811,11 +949,11 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.GetTaskByIDResponse:
+  emplacc-api_internal_dto_response.GetTaskByIDResponse:
     properties:
       assigned_to:
         allOf:
-        - $ref: '#/definitions/response.UserShort'
+        - $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
         description: Связь с users
       community:
         type: integer
@@ -823,7 +961,7 @@ definitions:
         type: string
       created_by:
         allOf:
-        - $ref: '#/definitions/response.UserShort'
+        - $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
         description: Связь с users
       deadline:
         description: DATE в БД
@@ -849,8 +987,10 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.GetUserResponse:
+  emplacc-api_internal_dto_response.GetUserResponse:
     properties:
+      avatar_url:
+        type: string
       created_at:
         type: string
       email:
@@ -874,7 +1014,7 @@ definitions:
       tg_user_id:
         type: integer
     type: object
-  response.HelpRequestItem:
+  emplacc-api_internal_dto_response.HelpRequestItem:
     properties:
       description:
         type: string
@@ -885,23 +1025,23 @@ definitions:
       status:
         type: string
     type: object
-  response.HelpRequestWithAssignerID:
+  emplacc-api_internal_dto_response.HelpRequestWithAssignerID:
     properties:
       help_request:
-        $ref: '#/definitions/response.HelpRequestItem'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.HelpRequestItem'
       user_first_name:
         type: string
       user_last_name:
         type: string
     type: object
-  response.HelpRequestsForUser:
+  emplacc-api_internal_dto_response.HelpRequestsForUser:
     properties:
       help_requests:
         items:
-          $ref: '#/definitions/response.HelpRequestWithAssignerID'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.HelpRequestWithAssignerID'
         type: array
     type: object
-  response.ImprovedReportResponse:
+  emplacc-api_internal_dto_response.ImprovedReportResponse:
     properties:
       improved_text:
         type: string
@@ -914,21 +1054,21 @@ definitions:
       task_title:
         type: string
     type: object
-  response.InTaskBoard:
+  emplacc-api_internal_dto_response.InTaskBoard:
     properties:
       id:
         type: string
       name:
         type: string
     type: object
-  response.InTaskProject:
+  emplacc-api_internal_dto_response.InTaskProject:
     properties:
       id:
         type: string
       name:
         type: string
     type: object
-  response.ProblemListResponse:
+  emplacc-api_internal_dto_response.ProblemListResponse:
     properties:
       page:
         type: integer
@@ -936,12 +1076,12 @@ definitions:
         type: integer
       problems:
         items:
-          $ref: '#/definitions/response.ProblemResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemResponse'
         type: array
       total_count:
         type: integer
     type: object
-  response.ProblemResponse:
+  emplacc-api_internal_dto_response.ProblemResponse:
     properties:
       created_at:
         type: string
@@ -958,14 +1098,14 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.ProblemUniversalResponse:
+  emplacc-api_internal_dto_response.ProblemUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.ProblemsByUserId:
+  emplacc-api_internal_dto_response.ProblemsByUserId:
     properties:
       page:
         type: integer
@@ -973,28 +1113,28 @@ definitions:
         type: integer
       problems:
         items:
-          $ref: '#/definitions/response.ProblemResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemResponse'
         type: array
       total_count:
         type: integer
       user_id:
         type: string
     type: object
-  response.ProjectByTeamResponse:
+  emplacc-api_internal_dto_response.ProjectByTeamResponse:
     properties:
       projects:
         items:
-          $ref: '#/definitions/response.ProjectResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectResponse'
         type: array
     type: object
-  response.ProjectForSearchResponse:
+  emplacc-api_internal_dto_response.ProjectForSearchResponse:
     properties:
       created_at:
         type: string
       created_by:
         type: string
       created_by_user:
-        $ref: '#/definitions/response.UserShort'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
       description:
         type: string
       gitlab_project_id:
@@ -1010,7 +1150,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.ProjectListResponse:
+  emplacc-api_internal_dto_response.ProjectListResponse:
     properties:
       page:
         type: integer
@@ -1018,12 +1158,12 @@ definitions:
         type: integer
       projects:
         items:
-          $ref: '#/definitions/response.ProjectResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectResponse'
         type: array
       total_count:
         type: integer
     type: object
-  response.ProjectResponse:
+  emplacc-api_internal_dto_response.ProjectResponse:
     properties:
       created_at:
         type: string
@@ -1044,7 +1184,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.ProjectSearchResponse:
+  emplacc-api_internal_dto_response.ProjectSearchResponse:
     properties:
       page:
         type: integer
@@ -1052,14 +1192,14 @@ definitions:
         type: integer
       projects:
         items:
-          $ref: '#/definitions/response.ProjectForSearchResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectForSearchResponse'
         type: array
       query:
         type: string
       totalCount:
         type: integer
     type: object
-  response.ProjectShort:
+  emplacc-api_internal_dto_response.ProjectShort:
     properties:
       created_by:
         type: string
@@ -1072,14 +1212,14 @@ definitions:
       name:
         type: string
     type: object
-  response.ProjectUniversalResponse:
+  emplacc-api_internal_dto_response.ProjectUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.RefreshResponse:
+  emplacc-api_internal_dto_response.RefreshResponse:
     properties:
       access_token:
         type: string
@@ -1094,7 +1234,7 @@ definitions:
       token_type:
         type: string
     type: object
-  response.RemoveRoleUserResponse:
+  emplacc-api_internal_dto_response.RemoveRoleUserResponse:
     properties:
       message:
         type: string
@@ -1103,29 +1243,29 @@ definitions:
       user_id:
         type: string
     type: object
-  response.ReportFullResponse:
+  emplacc-api_internal_dto_response.ReportFullResponse:
     properties:
       checked:
         type: integer
       completed_work:
         items:
-          $ref: '#/definitions/response.CompletedWorkWithTask'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.CompletedWorkWithTask'
         type: array
       created_at:
         type: string
       help_requests:
         items:
-          $ref: '#/definitions/response.HelpRequestItem'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.HelpRequestItem'
         type: array
       id:
         type: string
       plan_tomorrow:
         items:
-          $ref: '#/definitions/response.TomorrowPlansWithTask'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TomorrowPlansWithTask'
         type: array
       problem:
         items:
-          $ref: '#/definitions/response.ProblemResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemResponse'
         type: array
       report_date:
         type: string
@@ -1134,27 +1274,27 @@ definitions:
       user_id:
         type: string
       user_info:
-        $ref: '#/definitions/response.UserShort'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
     type: object
-  response.ReportListByProjectId:
+  emplacc-api_internal_dto_response.ReportListByProjectId:
     properties:
       project_id:
         type: string
       reports:
         items:
-          $ref: '#/definitions/response.ReportResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ReportResponse'
         type: array
     type: object
-  response.ReportListByTaskId:
+  emplacc-api_internal_dto_response.ReportListByTaskId:
     properties:
       reports:
         items:
-          $ref: '#/definitions/response.ReportResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ReportResponse'
         type: array
       task_id:
         type: string
     type: object
-  response.ReportListResponse:
+  emplacc-api_internal_dto_response.ReportListResponse:
     properties:
       page:
         type: integer
@@ -1162,34 +1302,34 @@ definitions:
         type: integer
       reports:
         items:
-          $ref: '#/definitions/response.ReportResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ReportResponse'
         type: array
       total_count:
         type: integer
     type: object
-  response.ReportResponse:
+  emplacc-api_internal_dto_response.ReportResponse:
     properties:
       checked:
         type: integer
       completed_work:
         items:
-          $ref: '#/definitions/response.CompletedWork'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.CompletedWork'
         type: array
       created_at:
         type: string
       help_requests:
         items:
-          $ref: '#/definitions/response.HelpRequestItem'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.HelpRequestItem'
         type: array
       id:
         type: string
       plan_tomorrow:
         items:
-          $ref: '#/definitions/response.TomorrowPlans'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TomorrowPlans'
         type: array
       problem:
         items:
-          $ref: '#/definitions/response.ProblemResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemResponse'
         type: array
       report_date:
         type: string
@@ -1198,35 +1338,35 @@ definitions:
       user_id:
         type: string
       user_info:
-        $ref: '#/definitions/response.UserShort'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
     type: object
-  response.ReportUniversalResponse:
+  emplacc-api_internal_dto_response.ReportUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.RoleUniversalResponse:
+  emplacc-api_internal_dto_response.RoleUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.StatusByBoardIdResponse:
+  emplacc-api_internal_dto_response.StatusByBoardIdResponse:
     properties:
       board_id:
         type: string
       statuses:
         items:
-          $ref: '#/definitions/response.StatusResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.StatusResponse'
         type: array
     type: object
-  response.StatusFull:
+  emplacc-api_internal_dto_response.StatusFull:
     properties:
       board:
-        $ref: '#/definitions/response.BoardRef'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.BoardRef'
       color:
         type: string
       id:
@@ -1238,7 +1378,7 @@ definitions:
       name:
         type: string
     type: object
-  response.StatusListResponse:
+  emplacc-api_internal_dto_response.StatusListResponse:
     properties:
       page:
         type: integer
@@ -1246,12 +1386,12 @@ definitions:
         type: integer
       statuses:
         items:
-          $ref: '#/definitions/response.StatusShort'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.StatusShort'
         type: array
       total_count:
         type: integer
     type: object
-  response.StatusResponse:
+  emplacc-api_internal_dto_response.StatusResponse:
     properties:
       color:
         type: string
@@ -1273,12 +1413,12 @@ definitions:
         type: integer
       tasks:
         items:
-          $ref: '#/definitions/response.TaskShort'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TaskShort'
         type: array
       updated_at:
         type: string
     type: object
-  response.StatusShort:
+  emplacc-api_internal_dto_response.StatusShort:
     properties:
       color:
         type: string
@@ -1301,14 +1441,14 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.StatusUniversalResponse:
+  emplacc-api_internal_dto_response.StatusUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.SubscriptionListBySubObjectResponse:
+  emplacc-api_internal_dto_response.SubscriptionListBySubObjectResponse:
     properties:
       page:
         type: integer
@@ -1318,14 +1458,14 @@ definitions:
         type: string
       subscriptions:
         items:
-          $ref: '#/definitions/response.SubscriptionResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse'
         type: array
       total_count:
         type: integer
       type_id:
         type: integer
     type: object
-  response.SubscriptionListByUserIdResponse:
+  emplacc-api_internal_dto_response.SubscriptionListByUserIdResponse:
     properties:
       page:
         type: integer
@@ -1333,14 +1473,14 @@ definitions:
         type: integer
       subscriptions:
         items:
-          $ref: '#/definitions/response.SubscriptionResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse'
         type: array
       total_count:
         type: integer
       user_id:
         type: string
     type: object
-  response.SubscriptionListResponse:
+  emplacc-api_internal_dto_response.SubscriptionListResponse:
     properties:
       page:
         type: integer
@@ -1348,12 +1488,12 @@ definitions:
         type: integer
       subscriptions:
         items:
-          $ref: '#/definitions/response.SubscriptionResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse'
         type: array
       total_count:
         type: integer
     type: object
-  response.SubscriptionResponse:
+  emplacc-api_internal_dto_response.SubscriptionResponse:
     properties:
       created_at:
         type: string
@@ -1366,17 +1506,17 @@ definitions:
       user_id:
         type: string
     type: object
-  response.SubscriptionUniversalResponse:
+  emplacc-api_internal_dto_response.SubscriptionUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.TaskForReport:
+  emplacc-api_internal_dto_response.TaskForReport:
     properties:
       board:
-        $ref: '#/definitions/response.InTaskBoard'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.InTaskBoard'
       description:
         type: string
       id:
@@ -1384,18 +1524,18 @@ definitions:
       name:
         type: string
       project:
-        $ref: '#/definitions/response.InTaskProject'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.InTaskProject'
     type: object
-  response.TaskFull:
+  emplacc-api_internal_dto_response.TaskFull:
     properties:
       assigned_to_user:
-        $ref: '#/definitions/response.UserFull'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserFull'
       category:
         type: integer
       created_at:
         type: string
       created_by_user:
-        $ref: '#/definitions/response.UserFull'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserFull'
       deadline:
         type: string
       deleted:
@@ -1413,13 +1553,13 @@ definitions:
       start_date:
         type: string
       status:
-        $ref: '#/definitions/response.StatusFull'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.StatusFull'
       time_spent:
         type: string
       updated_at:
         type: string
     type: object
-  response.TaskListResponse:
+  emplacc-api_internal_dto_response.TaskListResponse:
     properties:
       page:
         type: integer
@@ -1427,12 +1567,12 @@ definitions:
         type: integer
       tasks:
         items:
-          $ref: '#/definitions/response.TaskShort'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TaskShort'
         type: array
       total_count:
         type: integer
     type: object
-  response.TaskProjectInfo:
+  emplacc-api_internal_dto_response.TaskProjectInfo:
     properties:
       description:
         type: string
@@ -1441,14 +1581,14 @@ definitions:
       name:
         type: string
     type: object
-  response.TaskSearchItem:
+  emplacc-api_internal_dto_response.TaskSearchItem:
     properties:
       assigned_to:
-        $ref: '#/definitions/response.UserShort'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
       created_at:
         type: string
       created_by:
-        $ref: '#/definitions/response.UserShort'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserShort'
       deadline:
         type: string
       description:
@@ -1460,15 +1600,15 @@ definitions:
       priority:
         type: integer
       project:
-        $ref: '#/definitions/response.TaskProjectInfo'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.TaskProjectInfo'
       start_date:
         type: string
       status:
-        $ref: '#/definitions/response.TaskStatusInfo'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.TaskStatusInfo'
       updated_at:
         type: string
     type: object
-  response.TaskSearchResponse:
+  emplacc-api_internal_dto_response.TaskSearchResponse:
     properties:
       page:
         type: integer
@@ -1478,12 +1618,12 @@ definitions:
         type: string
       tasks:
         items:
-          $ref: '#/definitions/response.TaskSearchItem'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TaskSearchItem'
         type: array
       totalCount:
         type: integer
     type: object
-  response.TaskShort:
+  emplacc-api_internal_dto_response.TaskShort:
     properties:
       created_at:
         type: string
@@ -1502,7 +1642,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  response.TaskStatusInfo:
+  emplacc-api_internal_dto_response.TaskStatusInfo:
     properties:
       color:
         type: string
@@ -1513,15 +1653,17 @@ definitions:
       name:
         type: string
     type: object
-  response.TaskUniversaResponse:
+  emplacc-api_internal_dto_response.TaskUniversaResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.TeamMemberResponse:
+  emplacc-api_internal_dto_response.TeamMemberResponse:
     properties:
+      avatar_url:
+        type: string
       email:
         type: string
       first_name:
@@ -1533,7 +1675,7 @@ definitions:
       user_id:
         type: string
     type: object
-  response.TeamResponse:
+  emplacc-api_internal_dto_response.TeamResponse:
     properties:
       created_at:
         type: string
@@ -1543,14 +1685,14 @@ definitions:
         type: string
       members:
         items:
-          $ref: '#/definitions/response.TeamMemberResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TeamMemberResponse'
         type: array
       name:
         type: string
       updated_at:
         type: string
     type: object
-  response.TeamUniversalProjectResponse:
+  emplacc-api_internal_dto_response.TeamUniversalProjectResponse:
     properties:
       message:
         type: string
@@ -1559,14 +1701,14 @@ definitions:
       team_id:
         type: string
     type: object
-  response.TeamUniversalResponse:
+  emplacc-api_internal_dto_response.TeamUniversalResponse:
     properties:
       id:
         type: string
       message:
         type: string
     type: object
-  response.TeamUniversalUserResponse:
+  emplacc-api_internal_dto_response.TeamUniversalUserResponse:
     properties:
       message:
         type: string
@@ -1575,20 +1717,22 @@ definitions:
       user_id:
         type: string
     type: object
-  response.TeamsListResponse:
+  emplacc-api_internal_dto_response.TeamsListResponse:
     properties:
       teams:
         items:
-          $ref: '#/definitions/response.TeamResponse'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TeamResponse'
         type: array
     type: object
-  response.TokenValidationResponse:
+  emplacc-api_internal_dto_response.TokenValidationResponse:
     properties:
       message:
         description: '"Token is valid" или описание ошибки'
         type: string
+      user_id:
+        type: string
     type: object
-  response.TomorrowPlans:
+  emplacc-api_internal_dto_response.TomorrowPlans:
     properties:
       description:
         type: string
@@ -1597,16 +1741,16 @@ definitions:
       task_id:
         type: string
     type: object
-  response.TomorrowPlansWithTask:
+  emplacc-api_internal_dto_response.TomorrowPlansWithTask:
     properties:
       description:
         type: string
       id:
         type: string
       task:
-        $ref: '#/definitions/response.TaskForReport'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.TaskForReport'
     type: object
-  response.UserFull:
+  emplacc-api_internal_dto_response.UserFull:
     properties:
       email:
         type: string
@@ -1617,7 +1761,7 @@ definitions:
       last_name:
         type: string
     type: object
-  response.UserInfo:
+  emplacc-api_internal_dto_response.UserInfo:
     description: Структура с информацией о пользователе из Keycloak
     properties:
       email:
@@ -1642,25 +1786,27 @@ definitions:
         description: ID пользователя
         type: string
     type: object
-  response.UserProjectTasksResponse:
+  emplacc-api_internal_dto_response.UserProjectTasksResponse:
     properties:
       page:
         type: integer
       page_size:
         type: integer
       project:
-        $ref: '#/definitions/response.ProjectShort'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectShort'
       tasks:
         items:
-          $ref: '#/definitions/response.TaskFull'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TaskFull'
         type: array
       total_count:
         type: integer
       user:
-        $ref: '#/definitions/response.UserFull'
+        $ref: '#/definitions/emplacc-api_internal_dto_response.UserFull'
     type: object
-  response.UserShort:
+  emplacc-api_internal_dto_response.UserShort:
     properties:
+      avatar_url:
+        type: string
       first_name:
         type: string
       id:
@@ -1668,7 +1814,7 @@ definitions:
       last_name:
         type: string
     type: object
-  response.UserTasksResponse:
+  emplacc-api_internal_dto_response.UserTasksResponse:
     properties:
       page:
         type: integer
@@ -1676,16 +1822,292 @@ definitions:
         type: integer
       tasks:
         items:
-          $ref: '#/definitions/response.TaskFull'
+          $ref: '#/definitions/emplacc-api_internal_dto_response.TaskFull'
         type: array
       total_count:
         type: integer
     type: object
-  response.UserUniversalResponse:
+  emplacc-api_internal_dto_response.UserUniversalResponse:
     properties:
       id:
         type: string
       message:
+        type: string
+    type: object
+  emplacc-api_internal_service.ConveyorMutationResult:
+    properties:
+      entity_id:
+        type: string
+      event_id:
+        type: string
+      replayed:
+        type: boolean
+    type: object
+  emplacc-api_internal_service.PMImportCounter:
+    properties:
+      created:
+        type: integer
+      reused:
+        type: integer
+      total:
+        type: integer
+    type: object
+  emplacc-api_internal_service.PMImportSummary:
+    properties:
+      criteria:
+        $ref: '#/definitions/emplacc-api_internal_service.PMImportCounter'
+      dry_run:
+        type: boolean
+      events:
+        $ref: '#/definitions/emplacc-api_internal_service.PMImportCounter'
+      evidence:
+        $ref: '#/definitions/emplacc-api_internal_service.PMImportCounter'
+      links:
+        $ref: '#/definitions/emplacc-api_internal_service.PMImportCounter'
+      status_facts:
+        $ref: '#/definitions/emplacc-api_internal_service.PMImportCounter'
+      switch_over_accepted:
+        type: boolean
+      tickets:
+        $ref: '#/definitions/emplacc-api_internal_service.PMImportCounter'
+    type: object
+  internal_controller.conveyorAgentRunRequest:
+    properties:
+      harness:
+        example: external-harness
+        type: string
+      idempotency_key:
+        example: agent-run-register-1
+        type: string
+      log_uri:
+        example: https://example.test/log
+        type: string
+      metadata:
+        type: object
+      source:
+        example: rest
+        type: string
+      status:
+        example: queued
+        type: string
+      summary:
+        example: Run queued
+        type: string
+      workspace_uri:
+        example: file:///workspace
+        type: string
+    type: object
+  internal_controller.conveyorAgentRunUpdateRequest:
+    properties:
+      idempotency_key:
+        example: agent-run-update-1
+        type: string
+      log_uri:
+        example: https://example.test/log
+        type: string
+      metadata:
+        type: object
+      status:
+        example: running
+        type: string
+      summary:
+        example: Run started
+        type: string
+      workspace_uri:
+        example: file:///workspace
+        type: string
+    type: object
+  internal_controller.conveyorApprovalDecisionRequest:
+    properties:
+      idempotency_key:
+        example: approval-decide-1
+        type: string
+      reason:
+        example: approved by owner
+        type: string
+    type: object
+  internal_controller.conveyorApprovalRequest:
+    properties:
+      action:
+        example: production_deploy
+        type: string
+      expires_at:
+        example: ""
+        type: string
+      idempotency_key:
+        example: approval-request-1
+        type: string
+      reason:
+        example: deploy product-a to staging
+        type: string
+      resource:
+        type: object
+      risk_level:
+        example: high
+        type: string
+      work_item_id:
+        example: ""
+        type: string
+    type: object
+  internal_controller.conveyorCloseTaskRequest:
+    properties:
+      allow_dependency_auto_ready:
+        example: false
+        type: boolean
+      approval_granted:
+        example: false
+        type: boolean
+      approval_token:
+        example: approval-1
+        type: string
+      idempotency_key:
+        example: task-close-1
+        type: string
+      risk_level:
+        example: medium
+        type: string
+      task_waiver_id:
+        example: ""
+        type: string
+      to_status_id:
+        example: 9a888cc9-0e34-4f3e-8d9d-4924d9e35687
+        type: string
+    type: object
+  internal_controller.conveyorCriterionRequest:
+    properties:
+      ac_id:
+        example: AC-1
+        type: string
+      idempotency_key:
+        example: criterion-create-1
+        type: string
+      required:
+        example: true
+        type: boolean
+      spec_ids:
+        example:
+        - SPEC-1
+        - SPEC-2
+        items:
+          type: string
+        type: array
+      title:
+        example: Run targeted backend tests
+        type: string
+    type: object
+  internal_controller.conveyorCriterionStateRequest:
+    properties:
+      idempotency_key:
+        example: criterion-update-1
+        type: string
+      state:
+        example: passed
+        type: string
+    type: object
+  internal_controller.conveyorErrorResponse:
+    properties:
+      error:
+        example: validation_error
+        type: string
+    type: object
+  internal_controller.conveyorEvidenceRequest:
+    properties:
+      approval_granted:
+        example: false
+        type: boolean
+      approval_token:
+        example: approval-1
+        type: string
+      criterion_id:
+        example: ""
+        type: string
+      idempotency_key:
+        example: evidence-attach-1
+        type: string
+      metadata:
+        type: object
+      sha256:
+        example: ""
+        type: string
+      title:
+        example: Test evidence
+        type: string
+      type:
+        example: link
+        type: string
+      uri:
+        example: https://example.test/evidence
+        type: string
+      verdict:
+        example: supports
+        type: string
+    type: object
+  internal_controller.conveyorLLMTextResponse:
+    properties:
+      text:
+        example: draft text
+        type: string
+    type: object
+  internal_controller.conveyorPMImportRequest:
+    properties:
+      approval_granted:
+        example: false
+        type: boolean
+      approval_token:
+        example: approval-1
+        type: string
+      dry_run:
+        example: true
+        type: boolean
+      idempotency_key:
+        example: pm-import-1
+        type: string
+      scope:
+        example: default
+        type: string
+      status_by_pm_state:
+        type: object
+    type: object
+  internal_controller.conveyorRevokeEvidenceRequest:
+    properties:
+      idempotency_key:
+        example: evidence-revoke-1
+        type: string
+      reason:
+        example: superseded
+        type: string
+    type: object
+  internal_controller.conveyorTaskLinkRequest:
+    properties:
+      idempotency_key:
+        example: task-link-1
+        type: string
+      link_type:
+        example: relates_to
+        type: string
+      target_task_id:
+        example: 9a888cc9-0e34-4f3e-8d9d-4924d9e35687
+        type: string
+    type: object
+  internal_controller.conveyorWaiverRequest:
+    properties:
+      approval_request_id:
+        example: ""
+        type: string
+      criterion_id:
+        example: ""
+        type: string
+      expires_at:
+        example: ""
+        type: string
+      idempotency_key:
+        example: waiver-create-1
+        type: string
+      reason:
+        example: deferred to follow-up ticket
+        type: string
+      scope:
+        example: task
         type: string
     type: object
 info:
@@ -1694,6 +2116,865 @@ info:
   title: Emplacc API
   version: "1.0"
 paths:
+  /admin/llm-settings:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Получить настройки LLM
+      tags:
+      - Admin
+    patch:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Обновить настройки LLM
+      tags:
+      - Admin
+  /api/approval-requests:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Approval request
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorApprovalRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Request approval for a dangerous action
+      tags:
+      - conveyor
+  /api/approval-requests/{id}:
+    get:
+      parameters:
+      - description: Approval request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_domain.ApprovalRequest'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get an approval request
+      tags:
+      - conveyor
+  /api/approval-requests/{id}/deny:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Approval request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Decision
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorApprovalDecisionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Deny an approval request
+      tags:
+      - conveyor
+  /api/approval-requests/{id}/grant:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Approval request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Decision
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorApprovalDecisionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Grant an approval request
+      tags:
+      - conveyor
+  /api/conveyor/pm-import:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: PM import data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorPMImportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.PMImportSummary'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Import PM canon into Conveyor
+      tags:
+      - conveyor
+  /api/waivers/{id}:
+    get:
+      parameters:
+      - description: Waiver ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_domain.Waiver'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get a waiver
+      tags:
+      - conveyor
+  /api/work-items/{id}/agent-runs:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/emplacc-api_internal_domain.AgentRun'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List work item agent runs
+      tags:
+      - conveyor
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Agent run data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorAgentRunRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Register work item agent run
+      tags:
+      - conveyor
+  /api/work-items/{id}/agent-runs/{agent_run_id}:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Agent run ID
+        in: path
+        name: agent_run_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_domain.AgentRun'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get work item agent run
+      tags:
+      - conveyor
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Agent run ID
+        in: path
+        name: agent_run_id
+        required: true
+        type: string
+      - description: Agent run update
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorAgentRunUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update work item agent run
+      tags:
+      - conveyor
+  /api/work-items/{id}/agent-runs/{agent_run_id}/heartbeat:
+    post:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Agent run ID
+        in: path
+        name: agent_run_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Heartbeat work item agent run
+      tags:
+      - conveyor
+  /api/work-items/{id}/approval-requests:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/emplacc-api_internal_domain.ApprovalRequest'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List approval requests for a work item
+      tags:
+      - conveyor
+  /api/work-items/{id}/close:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Close request
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorCloseTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Close work item with evidence gate
+      tags:
+      - conveyor
+  /api/work-items/{id}/criteria:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/emplacc-api_internal_domain.AcceptanceCriterion'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List work item criteria
+      tags:
+      - conveyor
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Criterion data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorCriterionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create work item criterion
+      tags:
+      - conveyor
+  /api/work-items/{id}/criteria/{criterion_id}:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Criterion ID
+        in: path
+        name: criterion_id
+        required: true
+        type: string
+      - description: Criterion state
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorCriterionStateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update criterion state
+      tags:
+      - conveyor
+  /api/work-items/{id}/events:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/emplacc-api_internal_domain.ConveyorEvent'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List work item events
+      tags:
+      - conveyor
+  /api/work-items/{id}/evidence:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/emplacc-api_internal_domain.Evidence'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List work item evidence
+      tags:
+      - conveyor
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Evidence data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorEvidenceRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Attach work item evidence
+      tags:
+      - conveyor
+  /api/work-items/{id}/evidence-summary:
+    post:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorLLMTextResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Summarize a work item's evidence via LLM (draft)
+      tags:
+      - conveyor
+  /api/work-items/{id}/evidence/{evidence_id}/revoke:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Evidence ID
+        in: path
+        name: evidence_id
+        required: true
+        type: string
+      - description: Revocation data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorRevokeEvidenceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Revoke work item evidence
+      tags:
+      - conveyor
+  /api/work-items/{id}/links:
+    get:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/emplacc-api_internal_domain.TaskLink'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List work item links
+      tags:
+      - conveyor
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Source work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Task link data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorTaskLinkRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Link work items
+      tags:
+      - conveyor
+  /api/work-items/{id}/suggest-criteria:
+    post:
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorLLMTextResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Suggest acceptance criteria for a work item via LLM (draft)
+      tags:
+      - conveyor
+  /api/work-items/{id}/waivers:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Work item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Waiver data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/internal_controller.conveyorWaiverRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_service.ConveyorMutationResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_controller.conveyorErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a waiver for a work item
+      tags:
+      - conveyor
   /attendance:
     post:
       consumes:
@@ -1705,14 +2986,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.AttendanceCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.AttendanceCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Посещение успешно создано
           schema:
-            $ref: '#/definitions/response.AttendanceUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AttendanceUniversalResponse'
         "400":
           description: Некорректные данные запроса
           schema:
@@ -1753,7 +3034,7 @@ paths:
         "200":
           description: Посещение успешно удалено
           schema:
-            $ref: '#/definitions/response.AttendanceUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AttendanceUniversalResponse'
         "400":
           description: Некорректный ID
           schema:
@@ -1798,14 +3079,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.AttendanceUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.AttendanceUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Посещение успешно обновлено
           schema:
-            $ref: '#/definitions/response.AttendanceUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AttendanceUniversalResponse'
         "400":
           description: Некорректные данные запроса или ID
           schema:
@@ -1857,7 +3138,7 @@ paths:
         "200":
           description: Список посещений успешно получен
           schema:
-            $ref: '#/definitions/response.AttendancesListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AttendancesListResponse'
         "400":
           description: Ошибка при парсинге параметров пагинации
           schema:
@@ -1899,7 +3180,7 @@ paths:
         "200":
           description: Список посещений пользователя успешно получен
           schema:
-            $ref: '#/definitions/response.AttendancesByUserId'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AttendancesByUserId'
         "400":
           description: Некорректный идентификатор пользователя
           schema:
@@ -1934,14 +3215,14 @@ paths:
         name: login
         required: true
         schema:
-          $ref: '#/definitions/request.LoginRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Успешная аутентификация
           schema:
-            $ref: '#/definitions/response.AuthResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AuthResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -2011,7 +3292,7 @@ paths:
         "200":
           description: Информация о пользователе
           schema:
-            $ref: '#/definitions/response.UserInfo'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserInfo'
         "401":
           description: Отсутствует или неверный токен
           schema:
@@ -2035,14 +3316,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.RefreshRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.RefreshRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Новые токены и время жизни
           schema:
-            $ref: '#/definitions/response.RefreshResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.RefreshResponse'
         "400":
           description: Неверный формат запроса
           schema:
@@ -2058,6 +3339,17 @@ paths:
       summary: Обновление access токена
       tags:
       - Auth
+  /auth/session:
+    delete:
+      responses: {}
+      summary: Завершить сессию
+    post:
+      responses: {}
+      summary: Создать сессию
+  /auth/session/rotate:
+    post:
+      responses: {}
+      summary: Ротировать сессию
   /auth/validate:
     get:
       consumes:
@@ -2075,11 +3367,11 @@ paths:
         "200":
           description: Токен валиден
           schema:
-            $ref: '#/definitions/response.TokenValidationResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TokenValidationResponse'
         "401":
           description: Невалидный или отсутствующий токен
           schema:
-            $ref: '#/definitions/response.TokenValidationResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TokenValidationResponse'
       summary: Проверка access_token
       tags:
       - Auth
@@ -2094,14 +3386,14 @@ paths:
         name: board
         required: true
         schema:
-          $ref: '#/definitions/request.BoardCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.BoardCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Доска успешно создана
           schema:
-            $ref: '#/definitions/response.BoardUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.BoardUniversalResponse'
         "400":
           description: Ошибка в запросе или некорректный идентификатор проекта
           schema:
@@ -2143,7 +3435,7 @@ paths:
         "200":
           description: Доска успешно удалена
           schema:
-            $ref: '#/definitions/response.BoardUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.BoardUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -2183,7 +3475,7 @@ paths:
         "200":
           description: Доска успешно получена
           schema:
-            $ref: '#/definitions/response.BoardResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.BoardResponse'
         "400":
           description: Некорректный идентификатор
           schema:
@@ -2228,14 +3520,14 @@ paths:
         name: board
         required: true
         schema:
-          $ref: '#/definitions/request.BoardUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.BoardUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Доска успешно обновлена
           schema:
-            $ref: '#/definitions/response.BoardUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.BoardUniversalResponse'
         "400":
           description: Ошибка в запросе или нет полей для обновления
           schema:
@@ -2287,7 +3579,7 @@ paths:
         "200":
           description: Список досок успешно получен
           schema:
-            $ref: '#/definitions/response.BoardListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.BoardListResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -2328,7 +3620,7 @@ paths:
         "200":
           description: Список досок успешно получен
           schema:
-            $ref: '#/definitions/response.BoardForProjectResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.BoardForProjectResponse'
         "400":
           description: Некорректный идентификатор проекта
           schema:
@@ -2394,280 +3686,6 @@ paths:
       summary: Экспорт задач проекта в XLSX
       tags:
       - Boards
-  /forum-messages:
-    post:
-      consumes:
-      - application/json
-      description: Создает новое сообщение форума с указанными параметрами
-      parameters:
-      - description: Данные для создания сообщения форума
-        in: body
-        name: forumMessage
-        required: true
-        schema:
-          $ref: '#/definitions/request.CreateForumMessageRequest'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Сообщение форума успешно создано
-          schema:
-            $ref: '#/definitions/response.ForumMessageUniversalResponse'
-        "400":
-          description: Ошибка в запросе или некорректные идентификаторы
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "401":
-          description: Нет или неверный токен
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Ошибка сервера при создании сообщения форума
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Создание нового сообщения форума
-      tags:
-      - ForumMessages
-  /forum-messages/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Логическое удаление сообщения форума по ID (поле deleted = true)
-      parameters:
-      - description: ID сообщения форума
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Сообщение форума успешно удалено
-          schema:
-            $ref: '#/definitions/response.ForumMessageUniversalResponse'
-        "401":
-          description: Нет или неверный токен
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "404":
-          description: Сообщение форума не найдено
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Ошибка сервера при удалении сообщения форума
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Удаление сообщения форума
-      tags:
-      - ForumMessages
-    get:
-      consumes:
-      - application/json
-      description: Получает данные сообщения форума по его уникальному идентификатору
-      parameters:
-      - description: ID сообщения форума
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Сообщение форума успешно получено
-          schema:
-            $ref: '#/definitions/response.ForumMessageResponse'
-        "400":
-          description: Некорректный идентификатор сообщения
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "401":
-          description: Нет или неверный токен
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "404":
-          description: Сообщение форума не найдено
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Ошибка сервера при получении сообщения форума
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Получение сообщения форума по ID
-      tags:
-      - ForumMessages
-    patch:
-      consumes:
-      - application/json
-      description: Обновляет данные сообщения форума по его ID
-      parameters:
-      - description: ID сообщения форума
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Данные для обновления сообщения форума
-        in: body
-        name: forumMessage
-        required: true
-        schema:
-          $ref: '#/definitions/request.UpdateForumMessageRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Сообщение форума успешно обновлено
-          schema:
-            $ref: '#/definitions/response.ForumMessageUniversalResponse'
-        "400":
-          description: Некорректный идентификатор или ошибка в запросе
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "401":
-          description: Нет или неверный токен
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Ошибка сервера при обновлении сообщения форума
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Обновление сообщения форума
-      tags:
-      - ForumMessages
-  /forum-messages/all/{page}/{pagesize}:
-    get:
-      consumes:
-      - application/json
-      description: Получает список всех сообщений форума с учетом пагинации, исключая
-        удаленные
-      parameters:
-      - description: Номер страницы
-        in: path
-        name: page
-        required: true
-        type: integer
-      - description: Размер страницы
-        in: path
-        name: pagesize
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Список сообщений форума успешно получен
-          schema:
-            $ref: '#/definitions/response.ForumMessageListResponse'
-        "400":
-          description: Ошибка в запросе
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "401":
-          description: Нет или неверный токен
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Ошибка сервера при получении сообщений форума
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Получение списка всех сообщений форума
-      tags:
-      - ForumMessages
-  /forum-messages/problem/{id}/{page}/{pagesize}:
-    get:
-      consumes:
-      - application/json
-      description: Получает список сообщений форума, связанных с указанной проблемой,
-        с учетом пагинации
-      parameters:
-      - description: ID проблемы
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Номер страницы
-        in: path
-        name: page
-        required: true
-        type: integer
-      - description: Размер страницы
-        in: path
-        name: pagesize
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Список сообщений форума успешно получен
-          schema:
-            $ref: '#/definitions/response.ForumMessageListByProblemIdResponse'
-        "400":
-          description: Некорректный идентификатор проблемы или ошибка в запросе
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "401":
-          description: Нет или неверный токен
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "500":
-          description: Ошибка сервера при получении сообщений форума
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Получение сообщений форума по ID проблемы
-      tags:
-      - ForumMessages
   /problem:
     post:
       consumes:
@@ -2679,14 +3697,14 @@ paths:
         name: problem
         required: true
         schema:
-          $ref: '#/definitions/request.ProblemCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ProblemCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Проблема успешно создана
           schema:
-            $ref: '#/definitions/response.ProblemUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemUniversalResponse'
         "400":
           description: Ошибка в запросе или некорректный идентификатор пользователя
           schema:
@@ -2728,7 +3746,7 @@ paths:
         "200":
           description: Проблема успешно удалена
           schema:
-            $ref: '#/definitions/response.ProblemUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemUniversalResponse'
         "404":
           description: Проблема не найдена
           schema:
@@ -2762,7 +3780,7 @@ paths:
         "200":
           description: Проблема успешно получена
           schema:
-            $ref: '#/definitions/response.ProblemResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemResponse'
         "400":
           description: Некорректный идентификатор проблемы
           schema:
@@ -2807,14 +3825,14 @@ paths:
         name: problem
         required: true
         schema:
-          $ref: '#/definitions/request.ProblemUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ProblemUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Проблема успешно обновлена
           schema:
-            $ref: '#/definitions/response.ProblemUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -2860,7 +3878,7 @@ paths:
         "200":
           description: Список проблем успешно получен
           schema:
-            $ref: '#/definitions/response.ProblemListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemListResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -2912,7 +3930,7 @@ paths:
         "200":
           description: Список проблем успешно получен
           schema:
-            $ref: '#/definitions/response.ProblemsByUserId'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProblemsByUserId'
         "400":
           description: Ошибка в запросе
           schema:
@@ -2948,14 +3966,14 @@ paths:
         name: project
         required: true
         schema:
-          $ref: '#/definitions/request.CreateProjectRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.CreateProjectRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Проект успешно создан
           schema:
-            $ref: '#/definitions/response.ProjectUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectUniversalResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -2997,7 +4015,7 @@ paths:
         "200":
           description: Проект успешно удален
           schema:
-            $ref: '#/definitions/response.ProjectUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -3037,7 +4055,7 @@ paths:
         "200":
           description: Проект успешно получен
           schema:
-            $ref: '#/definitions/response.ProjectResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectResponse'
         "400":
           description: Некорректный идентификатор проекта
           schema:
@@ -3082,14 +4100,14 @@ paths:
         name: project
         required: true
         schema:
-          $ref: '#/definitions/request.UpdateProjectRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.UpdateProjectRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Проект успешно обновлен
           schema:
-            $ref: '#/definitions/response.ProjectUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -3135,7 +4153,7 @@ paths:
         "200":
           description: Список проектов успешно получен
           schema:
-            $ref: '#/definitions/response.ProjectListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectListResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -3166,7 +4184,8 @@ paths:
       description: 'Ищет проекты по имени, описанию или GitLab URL с автодополнением
         после каждого введенного символа. Поддерживает автоматическую замену раскладки
         клавиатуры (английская-русская) для расширенного поиска и пагинацию. Проекты
-        сортируются: сначала проекты где пользователь создатель, потом остальные.'
+        сортируются: сначала проекты где пользователь состоит, потом создатель, потом
+        остальные.'
       parameters:
       - description: Поисковый запрос
         in: query
@@ -3196,7 +4215,7 @@ paths:
         "200":
           description: Результаты поиска проектов
           schema:
-            $ref: '#/definitions/response.ProjectSearchResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectSearchResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -3237,7 +4256,7 @@ paths:
         "200":
           description: Список проектов успешно получен
           schema:
-            $ref: '#/definitions/response.ProjectByTeamResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectByTeamResponse'
         "400":
           description: Некорректный team_id
           schema:
@@ -3286,7 +4305,7 @@ paths:
           description: Список проектов успешно получен
           schema:
             items:
-              $ref: '#/definitions/response.ProjectResponse'
+              $ref: '#/definitions/emplacc-api_internal_dto_response.ProjectResponse'
             type: array
         "400":
           description: Некорректный идентификатор пользователя
@@ -3329,14 +4348,14 @@ paths:
         name: report
         required: true
         schema:
-          $ref: '#/definitions/request.ReportCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ReportCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Отчет успешно создан
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -3378,7 +4397,7 @@ paths:
         "200":
           description: Отчет успешно удален
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -3418,7 +4437,7 @@ paths:
         "200":
           description: Отчет успешно получен
           schema:
-            $ref: '#/definitions/response.ReportFullResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportFullResponse'
         "400":
           description: Некорректный идентификатор отчета
           schema:
@@ -3459,14 +4478,14 @@ paths:
         name: report
         required: true
         schema:
-          $ref: '#/definitions/request.ReportReplaceRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ReportReplaceRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Отчет успешно обновлен
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "400":
           description: Некорректный идентификатор отчета или ошибка в запросе
           schema:
@@ -3519,7 +4538,7 @@ paths:
         "200":
           description: Список отчетов успешно получен
           schema:
-            $ref: '#/definitions/response.ReportListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportListResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -3566,14 +4585,14 @@ paths:
         name: completedWork
         required: true
         schema:
-          $ref: '#/definitions/request.CompletedWorkUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.CompletedWorkUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Выполненная работа успешно обновлена
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -3634,7 +4653,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.ReportsByDateInXLSX'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ReportsByDateInXLSX'
       produces:
       - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
       responses:
@@ -3683,7 +4702,7 @@ paths:
         "200":
           description: Запрос на помощь успешно удален
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "400":
           description: Некорректный идентификатор запроса на помощь
           schema:
@@ -3728,14 +4747,14 @@ paths:
         name: helpRequest
         required: true
         schema:
-          $ref: '#/definitions/request.HelpRequestUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.HelpRequestUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Запрос на помощь успешно обновлен
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -3778,7 +4797,7 @@ paths:
         "200":
           description: Список запросов на помощь успешно получен
           schema:
-            $ref: '#/definitions/response.HelpRequestsForUser'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.HelpRequestsForUser'
         "400":
           description: Некорректный ID пользователя
           schema:
@@ -3819,7 +4838,7 @@ paths:
         "200":
           description: Список отчетов успешно получен
           schema:
-            $ref: '#/definitions/response.ReportListByProjectId'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportListByProjectId'
         "400":
           description: Некорректный идентификатор проекта
           schema:
@@ -3867,7 +4886,7 @@ paths:
         "200":
           description: Список отчетов успешно получен
           schema:
-            $ref: '#/definitions/response.ReportListByTaskId'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportListByTaskId'
         "400":
           description: Некорректный идентификатор задачи
           schema:
@@ -3914,14 +4933,14 @@ paths:
         name: tomorrowPlans
         required: true
         schema:
-          $ref: '#/definitions/request.TomorrowPlansUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TomorrowPlansUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Планы на завтра успешно обновлены
           schema:
-            $ref: '#/definitions/response.ReportUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -3973,7 +4992,7 @@ paths:
         "200":
           description: Список отчетов успешно получен
           schema:
-            $ref: '#/definitions/response.ReportListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ReportListResponse'
         "400":
           description: Некорректный ID пользователя
           schema:
@@ -4008,14 +5027,14 @@ paths:
         name: role
         required: true
         schema:
-          $ref: '#/definitions/request.RoleCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.RoleCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Роль успешно создана
           schema:
-            $ref: '#/definitions/response.RoleUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.RoleUniversalResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -4057,7 +5076,7 @@ paths:
         "200":
           description: Роль успешно удалена
           schema:
-            $ref: '#/definitions/response.RoleUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.RoleUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -4097,7 +5116,7 @@ paths:
         "200":
           description: Роль успешно получена
           schema:
-            $ref: '#/definitions/response.GetRoleResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetRoleResponse'
         "400":
           description: Некорректный идентификатор роли
           schema:
@@ -4142,14 +5161,14 @@ paths:
         name: role
         required: true
         schema:
-          $ref: '#/definitions/request.RoleUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.RoleUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Роль успешно обновлена
           schema:
-            $ref: '#/definitions/response.RoleUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.RoleUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -4195,7 +5214,7 @@ paths:
         "200":
           description: Список ролей успешно получен
           schema:
-            $ref: '#/definitions/response.GetAllRolesResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetAllRolesResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -4236,7 +5255,7 @@ paths:
         "200":
           description: Роль пользователя успешно получена
           schema:
-            $ref: '#/definitions/response.GetRoleByUserId'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetRoleByUserId'
         "400":
           description: Некорректный идентификатор пользователя
           schema:
@@ -4277,14 +5296,14 @@ paths:
         name: /status
         required: true
         schema:
-          $ref: '#/definitions/request.CreateStatusRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.CreateStatusRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Статус успешно создан
           schema:
-            $ref: '#/definitions/response.StatusUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.StatusUniversalResponse'
         "400":
           description: Ошибка при привязке данных
           schema:
@@ -4326,7 +5345,7 @@ paths:
         "200":
           description: Статус успешно удален
           schema:
-            $ref: '#/definitions/response.StatusUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.StatusUniversalResponse'
         "400":
           description: Некорректный идентификатор статуса
           schema:
@@ -4371,7 +5390,7 @@ paths:
         "200":
           description: Информация о статусе
           schema:
-            $ref: '#/definitions/response.StatusResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.StatusResponse'
         "400":
           description: Некорректный идентификатор статуса
           schema:
@@ -4416,14 +5435,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.UpdateStatusRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.UpdateStatusRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Статус успешно обновлен
           schema:
-            $ref: '#/definitions/response.StatusUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.StatusUniversalResponse'
         "400":
           description: Нет данных для обновления или некорректный ID
           schema:
@@ -4474,7 +5493,7 @@ paths:
         "200":
           description: Список статусов
           schema:
-            $ref: '#/definitions/response.StatusListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.StatusListResponse'
         "400":
           description: Ошибка при парсинге параметров
           schema:
@@ -4514,7 +5533,7 @@ paths:
         "200":
           description: Список статусов для доски
           schema:
-            $ref: '#/definitions/response.StatusByBoardIdResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.StatusByBoardIdResponse'
         "400":
           description: Ошибка при парсинге ID доски
           schema:
@@ -4549,14 +5568,14 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.SubscriptionCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.SubscriptionCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Подписка успешно создана
           schema:
-            $ref: '#/definitions/response.SubscriptionUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionUniversalResponse'
         "400":
           description: Ошибка при парсинге данных запроса
           schema:
@@ -4597,7 +5616,7 @@ paths:
         "200":
           description: Подписка успешно удалена
           schema:
-            $ref: '#/definitions/response.SubscriptionUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -4637,7 +5656,7 @@ paths:
         "200":
           description: Подписка успешно получена
           schema:
-            $ref: '#/definitions/response.SubscriptionResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionResponse'
         "400":
           description: Некорректный ID подписки
           schema:
@@ -4689,7 +5708,7 @@ paths:
         "200":
           description: Список подписок успешно получен
           schema:
-            $ref: '#/definitions/response.SubscriptionListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionListResponse'
         "400":
           description: Ошибка при парсинге параметров
           schema:
@@ -4746,7 +5765,7 @@ paths:
         "200":
           description: Список подписок успешно получен
           schema:
-            $ref: '#/definitions/response.SubscriptionListBySubObjectResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionListBySubObjectResponse'
         "400":
           description: Ошибка при парсинге параметров или данных запроса
           schema:
@@ -4798,7 +5817,7 @@ paths:
         "200":
           description: Список подписок успешно получен
           schema:
-            $ref: '#/definitions/response.SubscriptionListByUserIdResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.SubscriptionListByUserIdResponse'
         "400":
           description: Ошибка при парсинге параметров или данных запроса
           schema:
@@ -4833,14 +5852,14 @@ paths:
         name: task
         required: true
         schema:
-          $ref: '#/definitions/request.TaskCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TaskCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Задача успешно создана
           schema:
-            $ref: '#/definitions/response.TaskUniversaResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TaskUniversaResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -4888,7 +5907,7 @@ paths:
         "200":
           description: Задача успешно удалена
           schema:
-            $ref: '#/definitions/response.TaskUniversaResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TaskUniversaResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -4896,7 +5915,7 @@ paths:
               type: string
             type: object
         "404":
-          description: Задача не найдена
+          description: task not found
           schema:
             additionalProperties:
               type: string
@@ -4929,9 +5948,9 @@ paths:
         "200":
           description: Задача успешно получена
           schema:
-            $ref: '#/definitions/response.GetTaskByIDResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetTaskByIDResponse'
         "400":
-          description: Некорректный идентификатор задачи
+          description: invalid task id
           schema:
             additionalProperties:
               type: string
@@ -4943,7 +5962,7 @@ paths:
               type: string
             type: object
         "404":
-          description: Задача не найдена
+          description: task not found
           schema:
             additionalProperties:
               type: string
@@ -4974,14 +5993,14 @@ paths:
         name: task
         required: true
         schema:
-          $ref: '#/definitions/request.TaskUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TaskUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Задача успешно обновлена
           schema:
-            $ref: '#/definitions/response.TaskUniversaResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TaskUniversaResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -4995,7 +6014,7 @@ paths:
               type: string
             type: object
         "404":
-          description: Задача не найдена
+          description: task not found
           schema:
             additionalProperties:
               type: string
@@ -5028,14 +6047,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.ImproveReportRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ImproveReportRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Улучшенный отчет
           schema:
-            $ref: '#/definitions/response.ImprovedReportResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.ImprovedReportResponse'
         "400":
           description: Некорректный ID задачи или данные запроса
           schema:
@@ -5043,7 +6062,7 @@ paths:
               type: string
             type: object
         "404":
-          description: Задача не найдена
+          description: task not found
           schema:
             additionalProperties:
               type: string
@@ -5081,7 +6100,7 @@ paths:
         "200":
           description: Список задач успешно получен
           schema:
-            $ref: '#/definitions/response.TaskListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TaskListResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -5169,6 +6188,33 @@ paths:
       summary: Экспорт активных задач всех пользователей в XLSX
       tags:
       - Tasks
+  /task/improve-text:
+    post:
+      consumes:
+      - application/json
+      description: Улучшает текст без привязки к конкретной задаче — для использования
+        при создании задачи
+      parameters:
+      - description: Текст для улучшения
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/emplacc-api_internal_dto_request.ImproveReportRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: improved_text
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Улучшить произвольный текст для описания задачи через LLM
+      tags:
+      - Tasks
   /task/move:
     post:
       consumes:
@@ -5180,7 +6226,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.MoveTaskToAnotherStatus'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.MoveTaskToAnotherStatus'
       produces:
       - application/json
       responses:
@@ -5262,7 +6308,7 @@ paths:
         "200":
           description: Результаты поиска задач
           schema:
-            $ref: '#/definitions/response.TaskSearchResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TaskSearchResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -5314,7 +6360,7 @@ paths:
         "200":
           description: Список задач успешно получен
           schema:
-            $ref: '#/definitions/response.UserTasksResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserTasksResponse'
         "400":
           description: Ошибка при парсинге параметров или некорректный ID пользователя
           schema:
@@ -5366,7 +6412,7 @@ paths:
         "200":
           description: Список активных задач успешно получен
           schema:
-            $ref: '#/definitions/response.UserTasksResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserTasksResponse'
         "400":
           description: Ошибка при парсинге параметров или некорректный ID пользователя
           schema:
@@ -5423,7 +6469,7 @@ paths:
         "200":
           description: Список задач успешно получен
           schema:
-            $ref: '#/definitions/response.UserProjectTasksResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserProjectTasksResponse'
         "400":
           description: Некорректный ID пользователя или проекта
           schema:
@@ -5437,7 +6483,7 @@ paths:
               type: string
             type: object
         "404":
-          description: Пользователь или проект не найдены
+          description: user or project not found
           schema:
             additionalProperties:
               type: string
@@ -5464,14 +6510,14 @@ paths:
         name: team
         required: true
         schema:
-          $ref: '#/definitions/request.TeamCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Команда успешно создана
           schema:
-            $ref: '#/definitions/response.TeamUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -5512,7 +6558,7 @@ paths:
         "200":
           description: Команда успешно удалена
           schema:
-            $ref: '#/definitions/response.TeamUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -5553,7 +6599,7 @@ paths:
         "200":
           description: Команда успешно получена
           schema:
-            $ref: '#/definitions/response.TeamResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamResponse'
         "400":
           description: Некорректный идентификатор команды
           schema:
@@ -5598,14 +6644,14 @@ paths:
         name: team
         required: true
         schema:
-          $ref: '#/definitions/request.TeamUpdateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamUpdateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Команда успешно обновлена
           schema:
-            $ref: '#/definitions/response.TeamUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -5640,7 +6686,7 @@ paths:
         "200":
           description: Список команд успешно получен
           schema:
-            $ref: '#/definitions/response.TeamsListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamsListResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -5669,14 +6715,14 @@ paths:
         name: updateRole
         required: true
         schema:
-          $ref: '#/definitions/request.TeamUpdateMemberRoleRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamUpdateMemberRoleRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Роль успешно обновлена
           schema:
-            $ref: '#/definitions/response.TeamUniversalUserResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalUserResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -5717,14 +6763,14 @@ paths:
         name: deleteProject
         required: true
         schema:
-          $ref: '#/definitions/request.TeamDeleteProjectRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamDeleteProjectRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Проект успешно отвязан от команды
           schema:
-            $ref: '#/definitions/response.TeamUniversalProjectResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalProjectResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -5764,14 +6810,14 @@ paths:
         name: addProject
         required: true
         schema:
-          $ref: '#/definitions/request.TeamAddProjectRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamAddProjectRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Проект успешно привязан к команде
           schema:
-            $ref: '#/definitions/response.TeamUniversalProjectResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalProjectResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -5812,7 +6858,7 @@ paths:
         "200":
           description: Список команд успешно получен
           schema:
-            $ref: '#/definitions/response.TeamsListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamsListResponse'
         "400":
           description: Некорректный project_id
           schema:
@@ -5853,14 +6899,14 @@ paths:
         name: deleteUser
         required: true
         schema:
-          $ref: '#/definitions/request.TeamDeleteUserRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamDeleteUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Пользователь успешно удален из команды
           schema:
-            $ref: '#/definitions/response.TeamUniversalUserResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalUserResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -5900,14 +6946,14 @@ paths:
         name: addUser
         required: true
         schema:
-          $ref: '#/definitions/request.TeamAddUsersRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.TeamAddUsersRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Пользователь успешно добавлен в команду
           schema:
-            $ref: '#/definitions/response.TeamUniversalUserResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamUniversalUserResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -5948,7 +6994,7 @@ paths:
         "200":
           description: Список команд успешно получен
           schema:
-            $ref: '#/definitions/response.TeamsListResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.TeamsListResponse'
         "400":
           description: Некорректный идентификатор пользователя
           schema:
@@ -5978,6 +7024,29 @@ paths:
       summary: Получение команд пользователя
       tags:
       - Teams
+  /upload/refresh:
+    get:
+      description: Генерирует новый presigned URL для объекта по его пути
+      parameters:
+      - description: 'Путь к объекту (например: images/uuid.jpg)'
+        in: query
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: url
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Обновить presigned URL для файла
+      tags:
+      - Upload
   /user:
     post:
       consumes:
@@ -5989,7 +7058,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.UserCreateRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.UserCreateRequest'
       produces:
       - application/json
       responses:
@@ -6039,7 +7108,7 @@ paths:
         "200":
           description: Пользователь успешно удален
           schema:
-            $ref: '#/definitions/response.UserUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -6079,7 +7148,7 @@ paths:
         "200":
           description: Пользователь успешно получен
           schema:
-            $ref: '#/definitions/response.GetUserResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetUserResponse'
         "400":
           description: Некорректный идентификатор пользователя
           schema:
@@ -6124,14 +7193,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/request.UpdateUserRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.UpdateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Пользователь успешно обновлен
           schema:
-            $ref: '#/definitions/response.UserUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse'
         "400":
           description: Некорректный идентификатор или ошибка в запросе
           schema:
@@ -6178,7 +7247,7 @@ paths:
         "200":
           description: Список пользователей успешно получен
           schema:
-            $ref: '#/definitions/response.GetAllUsersResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetAllUsersResponse'
         "400":
           description: Ошибка в запросе
           schema:
@@ -6220,7 +7289,7 @@ paths:
         "200":
           description: Пользователь успешно удален
           schema:
-            $ref: '#/definitions/response.UserUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse'
         "401":
           description: Нет или неверный токен
           schema:
@@ -6245,6 +7314,27 @@ paths:
         ОШИБКИ 502)
       tags:
       - Users
+  /user/me:
+    get:
+      description: Возвращает данные пользователя из токена (sess_*, emplacc_*, JWT)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emplacc-api_internal_dto_response.GetUserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Текущий пользователь
+      tags:
+      - Users
   /user/restore:
     post:
       consumes:
@@ -6256,14 +7346,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.RestoreUserRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.RestoreUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Пользователь успешно восстановлен
           schema:
-            $ref: '#/definitions/response.UserUniversalResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.UserUniversalResponse'
         "400":
           description: Неверный запрос или пользователь не найден
           schema:
@@ -6298,14 +7388,14 @@ paths:
         name: removeRole
         required: true
         schema:
-          $ref: '#/definitions/request.RemoveRoleUserRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.RemoveRoleUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Роль успешно удалена
           schema:
-            $ref: '#/definitions/response.RemoveRoleUserResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.RemoveRoleUserResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:
@@ -6345,14 +7435,14 @@ paths:
         name: addRole
         required: true
         schema:
-          $ref: '#/definitions/request.AddRoleUserRequest'
+          $ref: '#/definitions/emplacc-api_internal_dto_request.AddRoleUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Роль успешно добавлена
           schema:
-            $ref: '#/definitions/response.AddRoleUserResponse'
+            $ref: '#/definitions/emplacc-api_internal_dto_response.AddRoleUserResponse'
         "400":
           description: Ошибка в запросе или некорректные идентификаторы
           schema:

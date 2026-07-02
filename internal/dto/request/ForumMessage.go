@@ -4,6 +4,7 @@ type CreateForumMessageRequest struct {
 	ProblemID   string    `json:"problem_id" validate:"required,uuid"`
 	Description *[]string `json:"description" validate:"required,max=255"`
 	CreatorID   string    `json:"creator_id" validate:"required,uuid"`
+	ReplyToID   *string   `json:"reply_to_id" validate:"omitempty,uuid"`
 }
 
 type UpdateForumMessageRequest struct {

@@ -3,7 +3,7 @@ package service
 import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"errors"
 	"time"
 
@@ -20,10 +20,10 @@ type SubscriptionService interface {
 }
 
 type subscriptionService struct {
-	repo repository.SubscriptionRepository
+	repo ports.SubscriptionRepository
 }
 
-func NewSubscriptionService(repo repository.SubscriptionRepository) SubscriptionService {
+func NewSubscriptionService(repo ports.SubscriptionRepository) SubscriptionService {
 	return &subscriptionService{
 		repo: repo,
 	}

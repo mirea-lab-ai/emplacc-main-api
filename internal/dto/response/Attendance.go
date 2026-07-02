@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type AttendanceUniversalResponse struct{
+type AttendanceUniversalResponse struct {
 	ID      string `json:"id"`
 	Message string `json:"message"`
 }
@@ -31,9 +31,9 @@ type AttendancesByUserId struct {
 	Attendances []AttendanceResponse `json:"attendances"`
 }
 
-type AttendancesListResponse struct{
+type AttendancesListResponse struct {
 	Attendances []AttendanceResponse `json:"attendances"`
-	TotalCount int64            `json:"total_count"`
-	Page       int              `json:"page"`
-	PageSize   int              `json:"page_size"`
+	TotalCount  int64                `json:"total_count"`
+	Page        int                  `json:"page"`
+	PageSize    int                  `json:"page_size"`
 }

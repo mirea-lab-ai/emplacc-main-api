@@ -37,61 +37,75 @@ func GetDBConnection() *gorm.DB {
 		log.Fatal("Failed to connect to database", err)
 	}
 
-	db.InstanceSet("gorm:cache:prepared_statement", nil)
-	db.InstanceSet("gorm:cache:schema", nil)
-
-	// включаем каскадные FK
-	db = db.Set("gorm:foreignKeyConstraints", true)
-
-	// берем *sql.DB для raw запросов
+	// Get the raw database handle for connection pool settings.
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatal("Failed to get *sql.DB from GORM:", err)
 	}
 
-	// пул соединений
+	// Connection pool settings.
 	sqlDB.SetMaxOpenConns(50)
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	if err := db.AutoMigrate(
-	// 1. Базовые сущности (без внешних ключов или с необязательными)
+		// Base entities with no foreign keys or optional foreign keys.
 		&models.User{},
 		&models.Role{},
 		&models.Team{},
 		&models.Problem{},
 
-		// 2. Джойн-таблицы и сущности, ссылающиеся на базовые
+		// Join tables and entities that reference base entities.
 		&models.UserRole{},
 		&models.TeamMember{},
-		&models.ForumMessage{}, // ссылается на Problem и User
-		&models.Project{},      // ссылается на User (CreatedBy)
+		&models.ForumMessage{}, // references Problem and User.
+		&models.Project{},      // references User through CreatedBy.
 
-		// 3. Сущности второго уровня
-		&models.Board{},        // ссылается на Project
+		// Second-level entities.
+		&models.Board{}, // references Project.
 
-		// 4. Статусы — ссылаются на Board
+		// Statuses reference Board.
 		&models.Status{},
 
-		// 5. Задачи — ссылаются на Status, User (AssignedTo, CreatedBy)
+		// Tasks reference Status and User.
 		&models.Task{},
 
-		// 6. Отчёты и связанные с задачами/пользователями
+		// Reports and related task or user entities.
 		&models.Attendance{},
 		&models.DailyReport{},
 		&models.ReportProblem{},
 		&models.HelpRequest{},
 		&models.CompletedWork{},
 		&models.TomorrowPlans{},
-		&models.ProjectTeam{},  // ссылается на Project и Team
+		&models.ProjectTeam{}, // references Project and Team.
 		&models.Subscription{},
+		&models.APIToken{},
+		&models.LLMSettings{},
+		&models.AcceptanceCriterion{},
+		&models.Evidence{},
+		&models.ConveyorEvent{},
+		&models.TaskLink{},
+		&models.WorkOrder{},
+		&models.AgentRun{},
+		&models.AgentInboxItem{},
+		&models.IdempotencyRecord{},
+		&models.GeneratedReport{},
+		&models.ForumDigest{},
+		&models.ForumActionCandidate{},
+		&models.Waiver{},
+		&models.ApprovalRequest{},
+		&models.CodeRepository{}, // git commit-tracker
+		&models.Commit{},
+		&models.Notification{}, // in-app notifications
+		&models.UserAlias{},    // приватные пер-юзер псевдонимы
+		// Session is stored in Redis, not PostgreSQL.
 	); err != nil {
 		log.Fatal("AutoMigrate failed:", err)
 	}
 
 	if err := SetupFullTextSearch(db); err != nil {
-        log.Printf("Warning: Full-Text Search setup had issues: %v", err)
-    }
+		log.Printf("Warning: Full-Text Search setup had issues: %v", err)
+	}
 
 	return db
 }

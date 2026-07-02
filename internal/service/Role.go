@@ -3,7 +3,7 @@ package service
 import (
 	models "emplacc-api/internal/domain"
 	"emplacc-api/internal/dto/request"
-	"emplacc-api/internal/repository"
+	"emplacc-api/internal/ports"
 	"errors"
 	"time"
 
@@ -20,10 +20,10 @@ type RoleService interface {
 }
 
 type roleService struct {
-	repo repository.RoleRepository
+	repo ports.RoleRepository
 }
 
-func NewRoleService(repo repository.RoleRepository) RoleService {
+func NewRoleService(repo ports.RoleRepository) RoleService {
 	return &roleService{
 		repo: repo,
 	}
@@ -59,8 +59,12 @@ func (s *roleService) CreateRole(req request.RoleCreateRequest) (uuid.UUID, erro
 
 func (s *roleService) UpdateRole(roleID uuid.UUID, req request.RoleUpdateRequest) error {
 	update := make(map[string]interface{})
-	if req.Name != nil        { update["name"] = *req.Name }
-	if req.Description != nil { update["description"] = *req.Description }
+	if req.Name != nil {
+		update["name"] = *req.Name
+	}
+	if req.Description != nil {
+		update["description"] = *req.Description
+	}
 	if len(update) == 0 {
 		return errors.New("no fields to update")
 	}

@@ -3,7 +3,7 @@ package request
 import "time"
 
 type TaskCreateRequest struct {
-	StatusID     string     `json:"status_id" validate:"required,uuid4"`
+	StatusID      string     `json:"status_id" validate:"required,uuid4"`
 	Name          *string    `json:"name" validate:"required,min=3,max=100"`
 	Description   *string    `json:"description" validate:"max=500"`
 	Priority      *int16     `json:"priority" validate:"required,min=1,max=10"`
@@ -23,7 +23,7 @@ type TaskUpdateRequest struct {
 	Deadline      *time.Time `json:"deadline"`
 	StartDate     *time.Time `json:"start_date"`
 	GitlabIssueID *int       `json:"gitlab_issue_id"`
-	Category     *int8      `json:"category"`
+	Category      *int8      `json:"category"`
 }
 
 type TaskListRequest struct {
@@ -32,6 +32,6 @@ type TaskListRequest struct {
 }
 
 type MoveTaskToAnotherStatus struct {
-	TaskID  string `json:"task_id" validate:"required,uuid4"`
+	TaskID     string `json:"task_id" validate:"required,uuid4"`
 	ToStatusID string `json:"status_id" validate:"required,uuid4"`
 }

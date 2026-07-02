@@ -1,1 +1,33 @@
-.idea
+# IDE & редакторы
+.idea/
+*.iml
+.vscode/
+
+# Git
+.git/
+.gitignore
+.gitlab-ci.yml
+
+# Секреты (никогда не должны попасть в образ)
+.env
+.env.*
+*.pem
+*.key
+*.crt
+
+# Тесты и разработка
+test/
+postgres/
+
+# Бинарники (пересобираются внутри образа)
+server
+*.exe
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Временные файлы Go
+*.test
+vendor/

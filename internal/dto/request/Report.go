@@ -8,7 +8,7 @@ import (
 
 type TomorrowPlanCreateRequest struct {
 	Description string `json:"description"`
-	TaskId      string    `json:"task_id"`
+	TaskId      string `json:"task_id"`
 }
 
 type ReportsByDateInXLSX struct {
@@ -16,45 +16,45 @@ type ReportsByDateInXLSX struct {
 	EndDate   time.Time `json:"end_date"`
 }
 
-type CompletedWorkCreateRequest struct{
+type CompletedWorkCreateRequest struct {
 	Description string `json:"description"`
-	TaskID string `json:"task_id"`
+	TaskID      string `json:"task_id"`
 }
 
 type HelpRequest struct {
-	HelperID    string `json:"helper_id"`
-	Description string `json:"description"`
-	Status      *string     `json:"status"`
+	HelperID    string  `json:"helper_id"`
+	Description string  `json:"description"`
+	Status      *string `json:"status"`
 }
 
 type ReportCreateRequest struct {
-	UserId       string           `json:"user_id"`
-	ReportDate   *time.Time       `json:"report_date"`
+	UserId       string                       `json:"user_id"`
+	ReportDate   *time.Time                   `json:"report_date"`
 	CompleteWork []CompletedWorkCreateRequest `json:"complete_work"`
-	PlanTomorrow []TomorrowPlanCreateRequest `json:"plan_tomorrow"`
-	Problems     []string                       `json:"problems,omitempty"`
-	Helps        []HelpRequest     `json:"help"`
+	PlanTomorrow []TomorrowPlanCreateRequest  `json:"plan_tomorrow"`
+	Problems     []string                     `json:"problems,omitempty"`
+	Helps        []HelpRequest                `json:"help"`
 }
 
 type ReportUpdateRequest struct {
 	UserId     *string    `json:"user_id"`
 	ReportDate *time.Time `json:"report_date"`
-	Checked	*int8      `json:"checked"`
+	Checked    *int8      `json:"checked"`
 }
 
-type HelpRequestUpdateRequest struct{
-	HelperID    *string     `json:"helper_id"`
-	Description *string     `json:"description"`
-	Status      *string     `json:"status"`
+type HelpRequestUpdateRequest struct {
+	HelperID    *string `json:"helper_id"`
+	Description *string `json:"description"`
+	Status      *string `json:"status"`
 }
 
-type CompletedWorkUpdateRequest struct{
-	Description  *string   `json:"description"`
-	TaskId       string    `json:"task_id"`
+type CompletedWorkUpdateRequest struct {
+	Description *string `json:"description"`
+	TaskId      string  `json:"task_id"`
 }
 
-type TomorrowPlansUpdateRequest struct{
-	Description  *string   `json:"description"`
+type TomorrowPlansUpdateRequest struct {
+	Description *string `json:"description"`
 }
 
 type ReportListRequest struct {
@@ -80,7 +80,7 @@ type Problem struct {
 type CompletedWorkReplaceRequest struct {
 	ID          *string `json:"id,omitempty"`
 	Description string  `json:"description"`
-	TaskID *string `json:"task_id,omitempty"`
+	TaskID      *string `json:"task_id,omitempty"`
 }
 
 type TomorrowPlanReplaceRequest struct {
@@ -96,13 +96,12 @@ type HelpRequestReplaceRequest struct {
 }
 
 type ReportReplaceRequest struct {
-	UserId     string                         `json:"user_id"`
-	ReportDate *time.Time                     `json:"report_date,omitempty"`
-	Checked    *int8                          `json:"checked,omitempty"`
+	UserId     string     `json:"user_id"`
+	ReportDate *time.Time `json:"report_date,omitempty"`
+	Checked    *int8      `json:"checked,omitempty"`
 
 	CompleteWork []CompletedWorkReplaceRequest `json:"complete_work,omitempty"`
 	PlanTomorrow []TomorrowPlanReplaceRequest  `json:"plan_tomorrow,omitempty"`
 	Problems     []string                      `json:"problems,omitempty"`
 	Helps        []HelpRequestReplaceRequest   `json:"help,omitempty"`
 }
-

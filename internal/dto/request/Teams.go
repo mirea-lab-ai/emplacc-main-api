@@ -4,8 +4,8 @@ package request
 // POST /team
 
 type TeamCreateRequest struct {
-	Name        string `json:"name" binding:"required"`
-	Description string `json:"description"`
+	Name        string   `json:"name" binding:"required"`
+	Description string   `json:"description"`
 	UsersIDs    []string `json:"user_ids"`
 }
 
@@ -23,7 +23,7 @@ type TeamUpdateRequest struct {
 }
 
 type TeamAddUsersRequest struct {
-	TeamID string `json:"team_id"`
+	TeamID  string   `json:"team_id"`
 	UserIDs []string `json:"user_ids"`
 }
 

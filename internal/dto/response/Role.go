@@ -4,9 +4,9 @@ import "time"
 
 type GetAllRolesResponse struct {
 	Roles      []GetRoleResponse `json:"roles"`
-	TotalCount int64 `json:"total_count"`
-	Page       int   `json:"page"`
-	PageSize   int   `json:"page_size"`
+	TotalCount int64             `json:"total_count"`
+	Page       int               `json:"page"`
+	PageSize   int               `json:"page_size"`
 }
 
 type GetRoleResponse struct {
@@ -23,6 +23,6 @@ type RoleUniversalResponse struct {
 }
 
 type GetRoleByUserId struct {
-	UserId  string  `json:"user_id"`
-	Role    GetRoleResponse `json:"role"`
+	UserId string           `json:"user_id"`
+	Role   *GetRoleResponse `json:"role"`
 }
